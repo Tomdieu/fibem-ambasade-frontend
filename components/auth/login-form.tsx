@@ -13,16 +13,19 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
+import { useI18n } from "@/locales/client";
 import { cn } from "@/lib/utils";
 
-const loginSchema = z.object({
-  email: z.string().email("Adresse email invalide."),
-  password: z.string().min(1, "Le mot de passe est requis."),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-
 export function LoginForm() {
+  const t = useI18n();
+
+  const loginSchema = z.object({
+    email: z.string().email(t("auth.email_invalid")),
+    password: z.string().min(1, t("auth.password_required")),
+  });
+
+  type LoginFormValues = z.infer<typeof loginSchema>;
+
   const [serverError, setServerError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -56,10 +59,10 @@ export function LoginForm() {
           GB
         </div>
         <h1 className="text-xl font-medium text-center mt-4">
-          Accès sécurisé
+          {t("auth.secure_access_title")}
         </h1>
         <p className="text-[var(--color-text-muted)] text-sm text-center mt-1">
-          Connectez-vous à votre espace
+          {t("auth.secure_access_subtitle")}
         </p>
       </div>
 
@@ -67,11 +70,11 @@ export function LoginForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-6">
         {/* Email field */}
         <div className="space-y-1.5">
-          <Label htmlFor="email">Adresse email</Label>
+          <Label htmlFor="email">{t("auth.email_label")}</Label>
           <Input
             id="email"
             type="email"
-            placeholder="vous@example.com"
+            placeholder={t("auth.email_placeholder")}
             autoComplete="email"
             aria-invalid={!!errors.email}
             {...register("email")}
@@ -83,11 +86,11 @@ export function LoginForm() {
 
         {/* Password field */}
         <div className="space-y-1.5">
-          <Label htmlFor="password">Mot de passe</Label>
+          <Label htmlFor="password">{t("auth.password_label")}</Label>
           <Input
             id="password"
             type="password"
-            placeholder="••••••••"
+            placeholder={t("auth.password_placeholder")}
             autoComplete="current-password"
             aria-invalid={!!errors.password}
             {...register("password")}
@@ -102,14 +105,14 @@ export function LoginForm() {
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
             <Label htmlFor="remember" className="text-xs font-normal cursor-pointer">
-              Se souvenir de moi
+              {t("auth.remember_me")}
             </Label>
           </div>
           <Link
             href="/auth/forgot-password"
             className="text-[var(--color-gb-red)] text-sm ml-auto hover:underline"
           >
-            Mot de passe oublié ?
+            {t("auth.forgot_password")}
           </Link>
         </div>
 
@@ -127,10 +130,10 @@ export function LoginForm() {
           {isPending ? (
             <>
               <Spinner className="mr-2" />
-              Connexion en cours…
+              {t("auth.connecting")}
             </>
           ) : (
-            "Se connecter"
+            t("auth.login_btn")
           )}
         </Button>
       </form>
@@ -138,25 +141,25 @@ export function LoginForm() {
       {/* Divider */}
       <div className="flex items-center gap-3 mt-6">
         <div className="flex-1 border-t border-border" />
-        <span className="text-[var(--color-text-muted)] text-xs">ou</span>
+        <span className="text-[var(--color-text-muted)] text-xs">{t("common.or")}</span>
         <div className="flex-1 border-t border-border" />
       </div>
 
       {/* Citizen link */}
       <p className="text-center mt-4 text-sm text-[var(--color-text-muted)]">
-        Vous êtes citoyen ?{" "}
+        {t("auth.are_citizen")}{" "}
         <Link
           href="/auth/register"
           className="text-[var(--color-gb-red)] text-sm hover:underline"
         >
-          Créer un compte
+          {t("auth.create_account_link")}
         </Link>
       </p>
 
       {/* Security notice */}
       <p className="flex items-center gap-1 justify-center mt-4 text-xs text-[var(--color-text-muted)]">
         <Lock className="size-3" />
-        Connexion sécurisée HTTPS
+        {t("auth.secure_https")}
       </p>
     </div>
   );
