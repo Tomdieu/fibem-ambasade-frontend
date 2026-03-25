@@ -1,7 +1,10 @@
+"use client";
+
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
-import { FOOTER_LINKS } from "@/lib/navigation";
+import { useFooterLinks } from "@/hooks/use-footer-links";
+import { useI18n } from "@/locales/client";
 import Image from "next/image";
 
 const SOCIAL_LINKS = [
@@ -70,6 +73,8 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { informations, services, legal } = useFooterLinks();
+  const t = useI18n();
 
   return (
     <footer className="bg-(--color-gb-dark) text-white">
@@ -120,9 +125,9 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Columns 2 & 3 — Links from FOOTER_LINKS (informations + services) */}
+          {/* Columns 2 & 3 — Links from footer links (informations + services) */}
           {(["informations", "services"] as const).map((key) => {
-            const section = FOOTER_LINKS[key];
+            const section = key === "informations" ? informations : services;
             return (
               <div key={key}>
                 <h3 className="mb-3 text-xs uppercase tracking-wider text-white/50">
@@ -152,19 +157,19 @@ export function Footer() {
             <ul className="flex flex-col gap-3 text-sm text-white/70">
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-white/40" />
-                <span>24 Rue de la Pompe, 75116 Paris, France</span>
+                <span>{t("footer.address")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="size-4 shrink-0 text-white/40" />
-                <span>+33 1 45 20 XX XX</span>
+                <span>{t("footer.phone")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="size-4 shrink-0 text-white/40" />
-                <span>contact@ambassade-guinee-bissau.fr</span>
+                <span>{t("footer.email")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock className="size-4 shrink-0 text-white/40" />
-                <span>Lun-Ven 9h00–17h00</span>
+                <span>{t("footer.hours")}</span>
               </li>
             </ul>
             <a
@@ -173,7 +178,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="mt-3 inline-block text-sm text-(--color-gb-yellow) hover:underline"
             >
-              Voir sur Google Maps
+              {t("footer.maps_link")}
             </a>
           </div>
         </div>
@@ -181,11 +186,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/10 pt-6 md:flex-row">
           <p className="text-sm text-white/50">
-            © {currentYear} Ambassade de Guinée-Bissau en France. Tous droits
-            réservés.
+            © {currentYear} {t("footer.copyright")}
           </p>
           <ul className="flex flex-wrap gap-4">
-            {FOOTER_LINKS.legal.links.map((link) => (
+            {legal.links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
