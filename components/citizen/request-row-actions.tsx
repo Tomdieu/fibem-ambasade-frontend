@@ -20,7 +20,7 @@ export function RequestRowActions({ requestId }: RequestRowActionsProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Button variant="ghost" size="icon-sm" aria-label="Actions">
           <MoreHorizontal className="size-4" />
           <span className="sr-only">Actions</span>
