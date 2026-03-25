@@ -128,7 +128,7 @@ export function ContactForm() {
               <Input
                 id="email"
                 type="email"
-                placeholder="vous@example.com"
+                placeholder={t("contact_form.email_placeholder")}
                 aria-invalid={!!errors.email}
                 {...register("email")}
               />
@@ -143,7 +143,7 @@ export function ContactForm() {
               <Input
                 id="phone"
                 type="tel"
-                placeholder="+33 6 XX XX XX XX"
+                placeholder={t("contact_form.phone_placeholder")}
                 {...register("phone")}
               />
             </div>
@@ -191,7 +191,7 @@ export function ContactForm() {
               <Textarea
                 id="message"
                 rows={5}
-                placeholder="Décrivez l'objet de votre demande…"
+                placeholder={t("contact_form.message_placeholder")}
                 aria-invalid={!!errors.message}
                 {...register("message")}
               />
@@ -257,7 +257,7 @@ export function ContactForm() {
             </Button>
 
             <p className="text-xs text-muted-foreground mt-2 text-center">
-              Délai de réponse habituel : 3 jours ouvrés
+              {t("contact_form.response_time")}
             </p>
           </form>
         )}
