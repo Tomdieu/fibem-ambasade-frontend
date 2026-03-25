@@ -1,3 +1,5 @@
+"use client";
+
 import { Download, CheckCircle, AlertTriangle } from "lucide-react";
 
 import { VisaRequest } from "@/types";
@@ -311,7 +313,7 @@ export default async function DemandeDetailPage({ params }: PageProps) {
           <CardContent className="space-y-2">
             {/* Approve */}
             <AlertDialog>
-              <AlertDialogTrigger asChild>
+              <AlertDialogTrigger>
                 <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
                   Approuver
                 </Button>
@@ -337,7 +339,7 @@ export default async function DemandeDetailPage({ params }: PageProps) {
 
             {/* Request missing docs */}
             <AlertDialog>
-              <AlertDialogTrigger asChild>
+              <AlertDialogTrigger>
                 <Button
                   variant="outline"
                   className="w-full border-amber-500 text-amber-700 hover:bg-amber-50"
@@ -365,7 +367,7 @@ export default async function DemandeDetailPage({ params }: PageProps) {
 
             {/* Reject */}
             <AlertDialog>
-              <AlertDialogTrigger asChild>
+              <AlertDialogTrigger>
                 <Button
                   variant="outline"
                   className="w-full border-red-500 text-red-700 hover:bg-red-50"
