@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/locales/client";
 import {
   Command,
   CommandDialog,
@@ -16,31 +17,44 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 
-const SEARCH_ITEMS = {
+const SEARCH_ITEMS_PATHS = {
   servicesConsulaires: [
-    { label: "Demande de visa", href: "/services/visa" },
-    { label: "Renouvellement de passeport", href: "/services/passeport" },
-    { label: "Légalisation de documents", href: "/services/legalisation" },
-    { label: "Acte d'état civil", href: "/services/etat-civil" },
-    { label: "Prise de rendez-vous", href: "/services/rendez-vous" },
+    { key: "visa", href: "/services/visa" },
+    { key: "passport_renewal", href: "/services/passeport" },
+    { key: "legalisation", href: "/services/legalisation" },
+    { key: "civil_registry", href: "/services/etat-civil" },
+    { key: "appointment", href: "/services/rendez-vous" },
   ],
   pages: [
-    { label: "L'Ambassade — Présentation", href: "/ambassade/presentation" },
-    { label: "Mot de l'Ambassadeur", href: "/ambassade/ambassadeur" },
-    { label: "Culture & Tourisme", href: "/guinee-bissau/culture" },
-    { label: "Coopération", href: "/cooperation" },
+    { key: "embassy_overview", href: "/ambassade/presentation" },
+    { key: "ambassador_message", href: "/ambassade/ambassadeur" },
+    { key: "culture_tourism", href: "/guinee-bissau/culture" },
+    { key: "cooperation", href: "/cooperation" },
   ],
   ressources: [
-    { label: "Formulaires en ligne", href: "/services/formulaires" },
-    {
-      label: "Actualités de la Guinée-Bissau",
-      href: "/guinee-bissau/actualites",
-    },
+    { key: "forms", href: "/services/formulaires" },
+    { key: "news", href: "/guinee-bissau/actualites" },
   ],
 };
 
 export function SearchDialog() {
   const [open, setOpen] = useState(false);
+  const t = useI18n();
+
+  const SEARCH_ITEMS = useMemo(() => ({
+    servicesConsulaires: SEARCH_ITEMS_PATHS.servicesConsulaires.map(item => ({
+      label: t(`search.${item.key}`),
+      href: item.href,
+    })),
+    pages: SEARCH_ITEMS_PATHS.pages.map(item => ({
+      label: t(`search.${item.key}`),
+      href: item.href,
+    })),
+    ressources: SEARCH_ITEMS_PATHS.ressources.map(item => ({
+      label: t(`search.${item.key}`),
+      href: item.href,
+    })),
+  }), [t]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -60,7 +74,7 @@ export function SearchDialog() {
         variant="ghost"
         size="sm"
         onClick={() => setOpen(true)}
-        aria-label="Rechercher"
+        aria-label={t("nav.search_placeholder")}
       >
         <Search className="size-4" />
       </Button>
@@ -68,14 +82,14 @@ export function SearchDialog() {
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
-        title="Recherche"
-        description="Recherchez une page ou un service consulaire."
+        title={t("nav.search_placeholder")}
+        description={t("nav.search_placeholder")}
       >
         <Command>
-          <CommandInput placeholder="Rechercher..." />
+          <CommandInput placeholder={t("nav.search_placeholder")} />
           <CommandList>
-            <CommandEmpty>Aucun résultat trouvé.</CommandEmpty>
-            <CommandGroup heading="Services Consulaires">
+            <CommandEmpty>{t("nav.no_results")}</CommandEmpty>
+            <CommandGroup heading={t("search.services_title")}>
               {SEARCH_ITEMS.servicesConsulaires.map((item) => (
                 <CommandItem
                   key={item.href}
@@ -90,7 +104,7 @@ export function SearchDialog() {
               ))}
             </CommandGroup>
             <CommandSeparator />
-            <CommandGroup heading="Pages">
+            <CommandGroup heading={t("search.pages_title")}>
               {SEARCH_ITEMS.pages.map((item) => (
                 <CommandItem
                   key={item.href}
@@ -105,7 +119,7 @@ export function SearchDialog() {
               ))}
             </CommandGroup>
             <CommandSeparator />
-            <CommandGroup heading="Ressources">
+            <CommandGroup heading={t("search.resources_title")}>
               {SEARCH_ITEMS.ressources.map((item) => (
                 <CommandItem
                   key={item.href}
