@@ -7,44 +7,48 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { VisaFormData } from "@/types/visa";
 
+import { useI18n } from "@/locales/client";
+
 interface StepDocumentsProps {
   control: Control<VisaFormData>;
 }
 
-const DOCUMENTS = [
-  {
-    field: "hasPassportScan" as const,
-    name: "Scan du passeport",
-    description: "Pages d'identité et pages des visas précédents",
-  },
-  {
-    field: "hasPhoto" as const,
-    name: "Photo d'identité",
-    description: "Photo récente (moins de 6 mois), fond blanc, 35×45 mm",
-  },
-  {
-    field: "hasInvitationLetter" as const,
-    name: "Lettre d'invitation",
-    description: "Si applicable, lettre officielle de l'invitant",
-  },
-  {
-    field: "hasProofOfAccommodation" as const,
-    name: "Justificatif d'hébergement",
-    description: "Réservation d'hôtel ou attestation d'hébergement",
-  },
-  {
-    field: "hasProofOfFunds" as const,
-    name: "Justificatif de ressources",
-    description: "Relevé bancaire ou tout document attestant vos moyens financiers",
-  },
-] as const;
-
 export function StepDocuments({ control }: StepDocumentsProps) {
+  const t = useI18n();
+
+  const DOCUMENTS = [
+    {
+      field: "hasPassportScan" as const,
+      name: t("step_documents.doc_passport"),
+      description: t("step_documents.doc_passport_desc"),
+    },
+    {
+      field: "hasPhoto" as const,
+      name: t("step_documents.doc_photo"),
+      description: t("step_documents.doc_photo_desc"),
+    },
+    {
+      field: "hasInvitationLetter" as const,
+      name: t("step_documents.doc_invitation"),
+      description: t("step_documents.doc_invitation_desc"),
+    },
+    {
+      field: "hasProofOfAccommodation" as const,
+      name: t("step_documents.doc_accommodation"),
+      description: t("step_documents.doc_accommodation_desc"),
+    },
+    {
+      field: "hasProofOfFunds" as const,
+      name: t("step_documents.doc_funds"),
+      description: t("step_documents.doc_funds_desc"),
+    },
+  ] as const;
+
   return (
     <div className="flex flex-col gap-4">
       <Alert>
         <AlertDescription>
-          Les documents originaux seront vérifiés lors du rendez-vous.
+          {t("step_documents.alert_info")}
         </AlertDescription>
       </Alert>
 
