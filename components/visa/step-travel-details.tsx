@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { VisaFormData } from "@/types/visa";
+import { useI18n } from "@/locales/client";
 
 interface StepTravelDetailsProps {
   control: Control<VisaFormData>;
@@ -21,6 +22,7 @@ interface StepTravelDetailsProps {
 
 export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
   const accommodationType = watch("accommodationType");
+  const t = useI18n();
 
   return (
     <div className="flex flex-col gap-4">
@@ -32,7 +34,7 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
           render={({ field, fieldState }) => (
             <div>
               <Label htmlFor="departureDate" className="mb-1 block">
-                Date de départ <span className="text-red-500">*</span>
+                {t("visa_form.departure_date_label")} <span className="text-red-500">*</span>
               </Label>
               <Input id="departureDate" type="date" {...field} />
               {fieldState.error && (
@@ -48,7 +50,7 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
           render={({ field, fieldState }) => (
             <div>
               <Label htmlFor="returnDate" className="mb-1 block">
-                Date de retour <span className="text-red-500">*</span>
+                {t("visa_form.return_date_label")} <span className="text-red-500">*</span>
               </Label>
               <Input id="returnDate" type="date" {...field} />
               {fieldState.error && (
@@ -66,11 +68,11 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
         render={({ field, fieldState }) => (
           <div>
             <Label htmlFor="purposeOfVisit" className="mb-1 block">
-              Motif du voyage <span className="text-red-500">*</span>
+              {t("visa_form.purpose_label")} <span className="text-red-500">*</span>
             </Label>
             <Textarea
               id="purposeOfVisit"
-              placeholder="Décrivez le motif de votre voyage..."
+              placeholder={t("visa_form.purpose_placeholder")}
               {...field}
             />
             {fieldState.error && (
@@ -87,7 +89,7 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
         render={({ field, fieldState }) => (
           <div>
             <Label htmlFor="destinationCity" className="mb-1 block">
-              Ville de destination <span className="text-red-500">*</span>
+              {t("visa_form.destination_city_label")} <span className="text-red-500">*</span>
             </Label>
             <Input id="destinationCity" placeholder="Bissau" {...field} />
             {fieldState.error && (
@@ -104,17 +106,17 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
         render={({ field, fieldState }) => (
           <div>
             <Label className="mb-1 block">
-              Type d&apos;hébergement <span className="text-red-500">*</span>
+              {t("visa_form.accommodation_label")} <span className="text-red-500">*</span>
             </Label>
             <Select value={field.value} onValueChange={field.onChange}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sélectionner..." />
+                <SelectValue placeholder={t("visa_form.select_placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Hôtel">Hôtel</SelectItem>
-                <SelectItem value="Chez l'habitant">Chez l&apos;habitant</SelectItem>
-                <SelectItem value="Airbnb">Airbnb</SelectItem>
-                <SelectItem value="Autre">Autre</SelectItem>
+                <SelectItem value="Hôtel">{t("visa_form.accommodation_hotel")}</SelectItem>
+                <SelectItem value="Chez l'habitant">{t("visa_form.accommodation_family")}</SelectItem>
+                <SelectItem value="Airbnb">{t("visa_form.accommodation_airbnb")}</SelectItem>
+                <SelectItem value="Autre">{t("visa_form.accommodation_other")}</SelectItem>
               </SelectContent>
             </Select>
             {fieldState.error && (
@@ -133,11 +135,11 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
             render={({ field, fieldState }) => (
               <div>
                 <Label htmlFor="invitingPersonName" className="mb-1 block">
-                  Nom de la personne qui vous invite
+                  {t("visa_form.inviting_person_name_label")}
                 </Label>
                 <Input
                   id="invitingPersonName"
-                  placeholder="Nom complet"
+                  placeholder={t("visa_form.inviting_person_name_placeholder")}
                   {...field}
                   value={field.value ?? ""}
                 />
@@ -154,11 +156,11 @@ export function StepTravelDetails({ control, watch }: StepTravelDetailsProps) {
             render={({ field, fieldState }) => (
               <div>
                 <Label htmlFor="invitingPersonAddress" className="mb-1 block">
-                  Adresse de la personne qui vous invite
+                  {t("visa_form.inviting_person_address_label")}
                 </Label>
                 <Input
                   id="invitingPersonAddress"
-                  placeholder="Adresse complète"
+                  placeholder={t("visa_form.inviting_person_address_placeholder")}
                   {...field}
                   value={field.value ?? ""}
                 />
