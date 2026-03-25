@@ -3,26 +3,29 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
+import { getI18n } from "@/locales/server";
 
 export const metadata: Metadata = {
   title: "Mentions Légales",
 };
 
-export default function MentionsLegalesPage() {
+export default async function MentionsLegalesPage() {
+  const t = await getI18n();
+
   return (
     <>
       <Header />
       <main className="flex-1">
         <PageHero
-          title="Mentions Légales"
+          title={t("pages_content.legal.legal_notice_title")}
           breadcrumbs={[
-            { label: "Accueil", href: "/" },
-            { label: "Mentions légales" },
+            { label: t("nav.home"), href: "/" },
+            { label: t("pages_content.legal.legal_notice_title") },
           ]}
         />
         <section className="max-w-4xl mx-auto px-[var(--spacing-container)] py-12">
           <h2 className="text-xl font-medium mt-8 mb-3 text-[var(--color-gb-dark)]">
-            Éditeur du site
+            {t("pages_content.legal.editor")}
           </h2>
           <p className="text-[var(--color-text-muted)] leading-relaxed">
             Le présent site est édité par l&apos;Ambassade de Guinée-Bissau en France.
@@ -41,7 +44,7 @@ export default function MentionsLegalesPage() {
           </p>
 
           <h2 className="text-xl font-medium mt-8 mb-3 text-[var(--color-gb-dark)]">
-            Hébergement
+            {t("pages_content.legal.hosting")}
           </h2>
           <p className="text-[var(--color-text-muted)] leading-relaxed">
             Ce site est hébergé par un prestataire d&apos;hébergement professionnel
@@ -51,7 +54,7 @@ export default function MentionsLegalesPage() {
           </p>
 
           <h2 className="text-xl font-medium mt-8 mb-3 text-[var(--color-gb-dark)]">
-            Propriété intellectuelle
+            {t("pages_content.legal.intellectual_property")}
           </h2>
           <p className="text-[var(--color-text-muted)] leading-relaxed">
             L&apos;ensemble des contenus présents sur ce site (textes, images, graphismes,
@@ -64,7 +67,7 @@ export default function MentionsLegalesPage() {
           </p>
 
           <h2 className="text-xl font-medium mt-8 mb-3 text-[var(--color-gb-dark)]">
-            Limitation de responsabilité
+            {t("pages_content.legal.liability")}
           </h2>
           <p className="text-[var(--color-text-muted)] leading-relaxed">
             L&apos;Ambassade de Guinée-Bissau en France s&apos;efforce d&apos;assurer l&apos;exactitude
