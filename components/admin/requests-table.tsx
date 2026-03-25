@@ -81,20 +81,20 @@ const columns: ColumnDef<VisaRow>[] = [
     header: "Actions",
     cell: ({ row }) => (
       <div className="flex items-center gap-1">
-        <Button variant="ghost" size="icon-sm" asChild>
+        <Button variant="ghost" size="icon-sm">
           <Link href={`/admin/demandes/${row.original.id}`}>
             <Eye className="w-4 h-4" />
             <span className="sr-only">Voir</span>
           </Link>
         </Button>
-        <Button variant="ghost" size="icon-sm" asChild>
+        <Button variant="ghost" size="icon-sm">
           <Link href={`/admin/demandes/${row.original.id}/modifier`}>
             <Pencil className="w-4 h-4" />
             <span className="sr-only">Modifier</span>
           </Link>
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="ghost" size="icon-sm">
               <MoreHorizontal className="w-4 h-4" />
               <span className="sr-only">Plus d&apos;actions</span>
