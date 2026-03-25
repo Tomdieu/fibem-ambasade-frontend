@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { useI18n } from "@/locales/client";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function LoginForm() {
   const t = useI18n();
@@ -50,18 +51,22 @@ export function LoginForm() {
   return (
     <div
       className={cn(
-        "max-w-sm w-full mx-auto bg-white border rounded-[var(--radius-card)] p-8"
+        "max-w-sm w-full mx-auto bg-white border rounded-card p-8",
       )}
     >
       {/* Logo + Heading */}
       <div className="flex flex-col items-center">
-        <div className="size-12 rounded-lg bg-[var(--color-gb-green)] text-white flex items-center justify-center font-bold text-sm">
-          GB
-        </div>
+        <Image
+          src="/web-app-manifest-192x192.png"
+          alt="Logo de l'Ambassade de Guinée-Bissau en France"
+          className="h-10 w-10 rounded object-contain"
+          width={40}
+          height={40}
+        />
         <h1 className="text-xl font-medium text-center mt-4">
           {t("auth.secure_access_title")}
         </h1>
-        <p className="text-[var(--color-text-muted)] text-sm text-center mt-1">
+        <p className="text-(--color-text-muted) text-sm text-center mt-1">
           {t("auth.secure_access_subtitle")}
         </p>
       </div>
@@ -104,28 +109,29 @@ export function LoginForm() {
         <div className="flex items-center">
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
-            <Label htmlFor="remember" className="text-xs font-normal cursor-pointer">
+            <Label
+              htmlFor="remember"
+              className="text-xs font-normal cursor-pointer"
+            >
               {t("auth.remember_me")}
             </Label>
           </div>
           <Link
             href="/auth/forgot-password"
-            className="text-[var(--color-gb-red)] text-sm ml-auto hover:underline"
+            className="text-(--color-gb-red) text-sm ml-auto hover:underline"
           >
             {t("auth.forgot_password")}
           </Link>
         </div>
 
         {/* Server error */}
-        {serverError && (
-          <p className="text-red-500 text-sm">{serverError}</p>
-        )}
+        {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
 
         {/* Submit */}
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full bg-[var(--color-gb-red)] text-white hover:bg-[var(--color-gb-red)]/90 rounded-[var(--radius-card)]"
+          className="w-full bg-(--color-gb-red) text-white hover:bg-gb-red/90 rounded-card"
         >
           {isPending ? (
             <>
@@ -141,23 +147,25 @@ export function LoginForm() {
       {/* Divider */}
       <div className="flex items-center gap-3 mt-6">
         <div className="flex-1 border-t border-border" />
-        <span className="text-[var(--color-text-muted)] text-xs">{t("common.or")}</span>
+        <span className="text-(--color-text-muted) text-xs">
+          {t("common.or")}
+        </span>
         <div className="flex-1 border-t border-border" />
       </div>
 
       {/* Citizen link */}
-      <p className="text-center mt-4 text-sm text-[var(--color-text-muted)]">
+      <p className="text-center mt-4 text-sm text-(--color-text-muted)">
         {t("auth.are_citizen")}{" "}
         <Link
           href="/auth/register"
-          className="text-[var(--color-gb-red)] text-sm hover:underline"
+          className="text-(--color-gb-red) text-sm hover:underline"
         >
           {t("auth.create_account_link")}
         </Link>
       </p>
 
       {/* Security notice */}
-      <p className="flex items-center gap-1 justify-center mt-4 text-xs text-[var(--color-text-muted)]">
+      <p className="flex items-center gap-1 justify-center mt-4 text-xs text-(--color-text-muted)">
         <Lock className="size-3" />
         {t("auth.secure_https")}
       </p>
