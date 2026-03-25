@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import type { VisaFormData } from "@/types/visa";
+import { useI18n } from "@/locales/client";
 
 interface StepConfirmationProps {
   formData: Partial<VisaFormData>;
@@ -23,24 +24,26 @@ function SummaryRow({ label, value }: { label: string; value?: string }) {
 }
 
 export function StepConfirmation({ formData, control }: StepConfirmationProps) {
+  const t = useI18n();
+
   return (
     <div className="flex flex-col gap-6">
       {/* Identity section */}
       <div>
         <h3 className="text-sm font-semibold text-(--color-gb-dark) mb-3">
-          Identité
+          {t("visa_form.section_identity")}
         </h3>
         <div className="grid grid-cols-2 gap-3">
-          <SummaryRow label="Nom" value={formData.lastName} />
-          <SummaryRow label="Prénom" value={formData.firstName} />
-          <SummaryRow label="Date de naissance" value={formData.birthDate} />
-          <SummaryRow label="Lieu de naissance" value={formData.birthPlace} />
-          <SummaryRow label="Nationalité" value={formData.nationality} />
-          <SummaryRow label="N° de passeport" value={formData.passportNumber} />
-          <SummaryRow label="Expiration passeport" value={formData.passportExpiry} />
-          <SummaryRow label="Type de visa" value={formData.visaType} />
+          <SummaryRow label={t("visa_form.last_name_label")} value={formData.lastName} />
+          <SummaryRow label={t("visa_form.first_name_label")} value={formData.firstName} />
+          <SummaryRow label={t("visa_form.birth_date_label")} value={formData.birthDate} />
+          <SummaryRow label={t("visa_form.birth_place_label")} value={formData.birthPlace} />
+          <SummaryRow label={t("visa_form.nationality_label")} value={formData.nationality} />
+          <SummaryRow label={t("visa_form.passport_number_label")} value={formData.passportNumber} />
+          <SummaryRow label={t("visa_form.passport_expiry_label")} value={formData.passportExpiry} />
+          <SummaryRow label={t("visa_form.visa_type_label")} value={formData.visaType} />
           <SummaryRow
-            label="Adresse en France"
+            label={t("visa_form.address_label")}
             value={
               formData.addressFrance
                 ? `${formData.addressFrance}, ${formData.postalCode} ${formData.city}`
@@ -53,16 +56,16 @@ export function StepConfirmation({ formData, control }: StepConfirmationProps) {
       {/* Travel section */}
       <div>
         <h3 className="text-sm font-semibold text-(--color-gb-dark) mb-3">
-          Voyage
+          {t("visa_form.section_travel")}
         </h3>
         <div className="grid grid-cols-2 gap-3">
-          <SummaryRow label="Date de départ" value={formData.departureDate} />
-          <SummaryRow label="Date de retour" value={formData.returnDate} />
-          <SummaryRow label="Ville de destination" value={formData.destinationCity} />
-          <SummaryRow label="Hébergement" value={formData.accommodationType} />
-          <SummaryRow label="Motif du voyage" value={formData.purposeOfVisit} />
+          <SummaryRow label={t("visa_form.departure_date_label")} value={formData.departureDate} />
+          <SummaryRow label={t("visa_form.return_date_label")} value={formData.returnDate} />
+          <SummaryRow label={t("visa_form.destination_city_label")} value={formData.destinationCity} />
+          <SummaryRow label={t("visa_form.accommodation_label")} value={formData.accommodationType} />
+          <SummaryRow label={t("visa_form.purpose_label")} value={formData.purposeOfVisit} />
           {formData.invitingPersonName && (
-            <SummaryRow label="Personne invitante" value={formData.invitingPersonName} />
+            <SummaryRow label={t("visa_form.inviting_person_name_label")} value={formData.invitingPersonName} />
           )}
         </div>
       </div>
@@ -70,28 +73,28 @@ export function StepConfirmation({ formData, control }: StepConfirmationProps) {
       {/* Documents section */}
       <div>
         <h3 className="text-sm font-semibold text-(--color-gb-dark) mb-3">
-          Documents
+          {t("visa_form.section_documents")}
         </h3>
         <div className="grid grid-cols-2 gap-3">
           <SummaryRow
-            label="Scan passeport"
-            value={formData.hasPassportScan ? "Oui" : "Non"}
+            label={t("visa_form.passport_required")}
+            value={formData.hasPassportScan ? t("visa_form.yes") : t("visa_form.no")}
           />
           <SummaryRow
-            label="Photo d'identité"
-            value={formData.hasPhoto ? "Oui" : "Non"}
+            label={t("visa_form.photos_required")}
+            value={formData.hasPhoto ? t("visa_form.yes") : t("visa_form.no")}
           />
           <SummaryRow
-            label="Lettre d'invitation"
-            value={formData.hasInvitationLetter ? "Oui" : "Non"}
+            label={t("visa_form.invitation_required")}
+            value={formData.hasInvitationLetter ? t("visa_form.yes") : t("visa_form.no")}
           />
           <SummaryRow
-            label="Justificatif hébergement"
-            value={formData.hasProofOfAccommodation ? "Oui" : "Non"}
+            label={t("visa_form.accommodation_proof")}
+            value={formData.hasProofOfAccommodation ? t("visa_form.yes") : t("visa_form.no")}
           />
           <SummaryRow
-            label="Justificatif ressources"
-            value={formData.hasProofOfFunds ? "Oui" : "Non"}
+            label={t("visa_form.funds_proof")}
+            value={formData.hasProofOfFunds ? t("visa_form.yes") : t("visa_form.no")}
           />
         </div>
       </div>
@@ -115,7 +118,7 @@ export function StepConfirmation({ formData, control }: StepConfirmationProps) {
                 className="mt-0.5"
               />
               <Label className="cursor-pointer leading-relaxed">
-                Je certifie que les informations fournies sont exactes et complètes.
+                {t("visa_form.certify_info")}
               </Label>
             </div>
             {fieldState.error && (
@@ -129,9 +132,7 @@ export function StepConfirmation({ formData, control }: StepConfirmationProps) {
       <div className="bg-(--color-surface-page) rounded-lg p-4 flex gap-2 text-xs text-(--color-text-muted) mt-4">
         <Shield className="size-4 shrink-0 text-(--color-gb-green) mt-0.5" />
         <p>
-          Vos données personnelles sont traitées de manière confidentielle et sécurisée
-          conformément au RGPD. Elles ne seront utilisées qu&apos;aux fins du traitement de
-          votre demande de visa.
+          {t("visa_form.privacy_notice")}
         </p>
       </div>
     </div>
