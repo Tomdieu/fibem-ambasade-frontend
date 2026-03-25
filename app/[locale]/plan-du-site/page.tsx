@@ -4,21 +4,24 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
+import { getI18n } from "@/locales/server";
 
 export const metadata: Metadata = {
   title: "Plan du Site",
 };
 
-export default function PlanDuSitePage() {
+export default async function PlanDuSitePage() {
+  const t = await getI18n();
+
   return (
     <>
       <Header />
       <main className="flex-1">
         <PageHero
-          title="Plan du Site"
+          title={t("pages_content.legal.site_map_title")}
           breadcrumbs={[
-            { label: "Accueil", href: "/" },
-            { label: "Plan du site" },
+            { label: t("nav.home"), href: "/" },
+            { label: t("pages_content.legal.site_map_title") },
           ]}
         />
         <section className="max-w-4xl mx-auto px-[var(--spacing-container)] py-12">
@@ -28,7 +31,7 @@ export default function PlanDuSitePage() {
               {/* L'Ambassade */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  L&apos;Ambassade
+                  {t("pages_content.ambassade.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
@@ -61,7 +64,7 @@ export default function PlanDuSitePage() {
               {/* Services Consulaires */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  Services Consulaires
+                  {t("pages_content.services.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
@@ -106,7 +109,7 @@ export default function PlanDuSitePage() {
               {/* Guinée-Bissau */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  Guinée-Bissau
+                  {t("pages_content.guinea.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
@@ -142,7 +145,7 @@ export default function PlanDuSitePage() {
               {/* Coopération */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  Coopération
+                  {t("pages_content.cooperation.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
@@ -157,7 +160,7 @@ export default function PlanDuSitePage() {
               {/* Diaspora */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  Diaspora
+                  {t("pages_content.diaspora.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
@@ -172,7 +175,7 @@ export default function PlanDuSitePage() {
               {/* Contact */}
               <div>
                 <h2 className="text-lg font-medium text-[var(--color-gb-dark)] mb-3">
-                  Contact
+                  {t("pages_content.contact.title")}
                 </h2>
                 <nav className="flex flex-col">
                   <Link
