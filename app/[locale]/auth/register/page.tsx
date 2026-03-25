@@ -11,7 +11,7 @@ export default function RegisterPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 min-h-screen bg-[var(--color-surface-page)] flex items-center justify-center p-4">
+      <main className="flex-1 min-h-screen bg-(--color-surface-page) flex items-center justify-center p-4">
         <RegisterContent />
       </main>
       <Footer />
