@@ -25,16 +25,20 @@ import { Badge } from "@/components/ui/badge";
 import { logoutAction } from "@/actions/auth-actions";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { label: "Tableau de bord", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Mes demandes", href: "/dashboard/demandes", icon: FileText },
-  { label: "Rendez-vous", href: "/dashboard/rendez-vous", icon: Calendar },
-  { label: "Mes documents", href: "/dashboard/documents", icon: FolderOpen },
-  { label: "Profil", href: "/dashboard/profil", icon: User },
-];
+import { useI18n } from "@/locales/client";
+import { useMemo } from "react";
 
 export function CitizenSidebar() {
   const pathname = usePathname();
+  const t = useI18n();
+
+  const navItems = useMemo(() => [
+    { label: t("citizen.nav_dashboard"), href: "/dashboard", icon: LayoutDashboard },
+    { label: t("citizen.nav_requests"), href: "/dashboard/demandes", icon: FileText },
+    { label: t("citizen.nav_appointments"), href: "/dashboard/rendez-vous", icon: Calendar },
+    { label: t("citizen.nav_documents"), href: "/dashboard/documents", icon: FolderOpen },
+    { label: t("citizen.nav_profile"), href: "/dashboard/profil", icon: User },
+  ], [t]);
 
   return (
     <Sidebar>
@@ -48,7 +52,7 @@ export function CitizenSidebar() {
           <div className="flex flex-col gap-0.5 min-w-0">
             <span className="text-sm font-medium truncate">João Mendes</span>
             <Badge variant="secondary" className="w-fit text-xs px-1.5 py-0">
-              Citoyen inscrit
+              {t("citizen.role_citizen")}
             </Badge>
           </div>
         </div>
@@ -88,7 +92,7 @@ export function CitizenSidebar() {
             className="flex w-full items-center gap-2 rounded-none px-2 py-2 text-xs text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           >
             <LogOut className="size-4" />
-            <span>Déconnexion</span>
+            <span>{t("citizen.logout")}</span>
           </button>
         </form>
       </SidebarFooter>
