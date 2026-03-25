@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import type { NavItem } from "@/types";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/locales/client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,7 +18,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
-import { MAIN_NAV } from "@/lib/navigation";
+import { useNavigation } from "@/hooks/use-navigation";
 import { cn } from "@/lib/utils";
 
 import { MobileNav } from "./mobile-nav";
@@ -78,6 +79,8 @@ export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const { mainNav } = useNavigation();
+  const t = useI18n();
 
   // Detect current locale from the URL
   const currentLocale =
@@ -105,69 +108,84 @@ export function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-50 w-full border-b bg-white transition-shadow",
+          "sticky top-0 z-50 w-full bg-white transition-shadow",
           scrollY > 20 && "shadow-sm"
         )}
       >
-        <div className="mx-auto flex h-15 max-w-7xl items-center justify-between px-(--spacing-container) md:h-18">
-          {/* Left: Logo + Name */}
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/web-app-manifest-192x192.png"
-              alt="Logo de l'Ambassade de Guinée-Bissau en France"
-              className="flex w-20 h-16 items-center justify-center rounded text-lg font-bold text-white"
-              width={128}
-              height={128}
-            />
-            <span className="hidden text-sm font-medium text-(--color-gb-dark) md:block">
-              Ambassade de Guinée-Bissau en France
-            </span>
-          </Link>
+        {/* ── Row 1: Logo + utility actions ── */}
+        <div className="border-b">
+          <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-(--spacing-container)">
+            {/* Logo + site name */}
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/web-app-manifest-192x192.png"
+                alt="Logo de l'Ambassade de Guinée-Bissau en France"
+                className="h-10 w-10 rounded object-contain"
+                width={40}
+                height={40}
+              />
+              <span className="hidden text-sm font-semibold leading-tight text-(--color-gb-dark) sm:block">
+                Ambassade de Guinée-Bissau<br />
+                <span className="font-normal text-text-muted text-xs">République de Guinée-Bissau · France</span>
+              </span>
+            </Link>
 
-          {/* Center: Desktop navigation */}
-          <div className="hidden md:flex">
+            {/* Utility actions */}
+            <div className="flex items-center gap-1">
+              <SearchDialog />
+
+              {/* Auth links — desktop only */}
+              <div className="hidden md:flex gap-1">
+                <Button variant="ghost" size="sm" asChild className="text-xs">
+                  <Link href="/auth/login">{t("auth.login_btn")}</Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="text-xs">
+                  <Link href="/auth/register">{t("auth.register_link")}</Link>
+                </Button>
+              </div>
+
+              {/* Language toggle */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={cycleLanguage}
+                aria-label="Changer de langue"
+                className="gap-1 text-xs"
+              >
+                <Globe className="size-3.5" />
+                <span>{currentLang}</span>
+              </Button>
+
+              {/* Mobile menu toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden"
+                onClick={() => setMobileNavOpen(true)}
+                aria-label="Ouvrir le menu"
+              >
+                <Menu className="size-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Row 2: Navigation (desktop only) ── */}
+        <div className="hidden md:block border-b bg-white">
+          <div className="mx-auto max-w-7xl px-(--spacing-container)">
             <NavigationMenu>
-              <NavigationMenuList>
-                {MAIN_NAV.map((item) => (
+              <NavigationMenuList className="gap-0">
+                {mainNav.map((item) => (
                   <DesktopNavItem key={item.href} item={item} />
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-
-          {/* Right: Actions */}
-          <div className="flex items-center gap-1">
-            {/* Search — renders its own trigger button + dialog */}
-            <SearchDialog />
-
-            {/* Language toggle */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={cycleLanguage}
-              aria-label="Changer de langue"
-              className="gap-1"
-            >
-              <Globe className="size-3.5" />
-              <span>{currentLang}</span>
-            </Button>
-
-            {/* Mobile menu toggle */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden"
-              onClick={() => setMobileNavOpen(true)}
-              aria-label="Ouvrir le menu"
-            >
-              <Menu className="size-4" />
-            </Button>
-          </div>
         </div>
       </header>
 
       <MobileNav
-        navItems={MAIN_NAV}
+        navItems={mainNav}
         isOpen={mobileNavOpen}
         onClose={() => setMobileNavOpen(false)}
       />
