@@ -6,8 +6,8 @@ const DEFAULT_LOCALE = "fr";
 type Locale = (typeof LOCALES)[number];
 
 function getLocale(request: NextRequest): Locale {
-  // 1. Check cookie set by the language toggle
-  const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
+  // 1. Check cookie set by the language toggle (next-international uses "Next-Locale")
+  const cookieLocale = request.cookies.get("Next-Locale")?.value;
   if (cookieLocale && LOCALES.includes(cookieLocale as Locale)) {
     return cookieLocale as Locale;
   }
