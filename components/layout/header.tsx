@@ -136,10 +136,10 @@ export function Header() {
 
               {/* Auth links — desktop only */}
               <div className="hidden md:flex gap-1">
-                <Button variant="ghost" size="sm" asChild className="text-xs">
+                <Button variant="ghost" size="sm" className="text-xs">
                   <Link href="/auth/login">{t("auth.login_btn")}</Link>
                 </Button>
-                <Button variant="outline" size="sm" asChild className="text-xs">
+                <Button variant="outline" size="sm" className="text-xs">
                   <Link href="/auth/register">{t("auth.register_link")}</Link>
                 </Button>
               </div>
