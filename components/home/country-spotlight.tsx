@@ -1,37 +1,41 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
+import { useI18n } from "@/locales/client";
 
 export function CountrySpotlight() {
+  const t = useI18n();
   return (
     <section className="py-section bg-surface-page">
       <div className="max-w-7xl mx-auto px-container">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left: image placeholder */}
-          <div className="relative aspect-video rounded-card overflow-hidden bg-gb-green/10 flex items-center justify-center">
-            <span className="text-gb-dark/30 text-2xl">
-              Guinée-Bissau
-            </span>
+          {/* Left: image */}
+          <div className="relative aspect-video rounded-card overflow-hidden">
+            <Image
+              src="/guinee-bissau.png"
+              alt="Guinée-Bissau"
+              fill
+              className="object-cover"
+            />
           </div>
 
           {/* Right: content */}
           <div>
-            <SectionHeading title="Découvrir la Guinée-Bissau" />
+            <SectionHeading title={t("home_page.country_title")} />
 
             <p className="text-text-muted mt-4 leading-relaxed">
-              La Guinée-Bissau est un pays d&apos;Afrique de l&apos;Ouest,
-              bordé par le Sénégal au nord, la Guinée au sud et à l&apos;est,
-              et l&apos;océan Atlantique à l&apos;ouest. Riche de sa
-              biodiversité, de sa culture et de ses traditions ancestrales,
-              le pays offre un patrimoine unique à découvrir.
+              {t("home_page.country_description")}
             </p>
 
             <div className="grid grid-cols-3 gap-3 mt-6">
-              <StatCard value="36 125 km²" label="Superficie" />
-              <StatCard value="2,1M" label="Population" />
-              <StatCard value="Bissau" label="Capitale" />
+              <StatCard value={t("home_page.stat_area_value")} label={t("home_page.stat_area")} />
+              <StatCard value={t("home_page.stat_population_value")} label={t("home_page.stat_population")} />
+              <StatCard value={t("home_page.stat_capital_value")} label={t("home_page.stat_capital")} />
             </div>
 
             <div className="mt-6">
@@ -39,7 +43,7 @@ export function CountrySpotlight() {
                 variant="outline"
                 render={<Link href="/guinee-bissau" />}
               >
-                En savoir plus
+                {t("home_page.learn_more_btn")}
               </Button>
             </div>
           </div>
