@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { PageHero } from "@/components/ui/page-hero";
+import Image from "next/image";
 
 export const metadata: Metadata = { title: "Mot de l'Ambassadeur" };
 
@@ -24,10 +25,16 @@ export default function AmbassadeurPage() {
           <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
             {/* Portrait */}
             <div className="flex flex-col items-center md:items-start">
-              <div className="w-48 h-56 bg-gb-dark/10 rounded-card flex items-center justify-center text-gb-dark/30 text-sm font-medium">
-                Photo
+              <div className="relative w-48 h-56 rounded-card overflow-hidden">
+                <Image
+                  src="/img1.jpg"
+                  alt="Portrait de l'Ambassadeur"
+                  fill
+                  sizes="192px"
+                  className="object-cover"
+                />
               </div>
-              <p className="font-medium mt-2 text-text-body">S.E.M. [Nom]</p>
+              <p className="font-medium mt-2 text-text-body">S.E.M. Henrique Adriano Da Silva</p>
               <p className="text-sm text-text-muted">Ambassadeur Extraordinaire</p>
               <p className="text-sm text-text-muted">et Plénipotentiaire</p>
             </div>
@@ -69,7 +76,7 @@ export default function AmbassadeurPage() {
                 de prospérité et de fraternité.
               </p>
               <p className="font-medium text-text-body not-italic">
-                S.E.M. [Nom de l'Ambassadeur]<br />
+                S.E.M. Henrique Adriano Da Silva<br />
                 <span className="font-normal text-text-muted text-sm">
                   Ambassadeur Extraordinaire et Plénipotentiaire<br />
                   de la République de Guinée-Bissau en France
