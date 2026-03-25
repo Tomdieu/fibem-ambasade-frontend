@@ -27,26 +27,29 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { logoutAction } from "@/actions/auth-actions";
-
-const gestionItems = [
-  { label: "Demandes consulaires", href: "/admin/demandes", icon: Inbox },
-  { label: "Rendez-vous", href: "/admin/rendez-vous", icon: Calendar },
-  { label: "Utilisateurs", href: "/admin/utilisateurs", icon: Users },
-  { label: "Documents", href: "/admin/documents", icon: FolderOpen },
-];
-
-const rapportsItems = [
-  { label: "Statistiques", href: "/admin/statistiques", icon: BarChart2 },
-  { label: "Exports", href: "/admin/exports", icon: Download },
-];
-
-const systemeItems = [
-  { label: "Paramètres", href: "/admin/parametres", icon: Settings },
-  { label: "Journal d'audit", href: "/admin/audit", icon: Shield },
-];
+import { useI18n } from "@/locales/client";
+import { useMemo } from "react";
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const t = useI18n();
+
+  const gestionItems = useMemo(() => [
+    { label: t("admin.demandes_consulaires"), href: "/admin/demandes", icon: Inbox },
+    { label: t("admin.rendez_vous"), href: "/admin/rendez-vous", icon: Calendar },
+    { label: t("admin.utilisateurs"), href: "/admin/utilisateurs", icon: Users },
+    { label: t("admin.documents"), href: "/admin/documents", icon: FolderOpen },
+  ], [t]);
+
+  const rapportsItems = useMemo(() => [
+    { label: t("admin.statistiques"), href: "/admin/statistiques", icon: BarChart2 },
+    { label: t("admin.exports"), href: "/admin/exports", icon: Download },
+  ], [t]);
+
+  const systemeItems = useMemo(() => [
+    { label: t("admin.parametres"), href: "/admin/parametres", icon: Settings },
+    { label: t("admin.journal_audit"), href: "/admin/audit", icon: Shield },
+  ], [t]);
 
   return (
     <Sidebar className="bg-gb-dark border-r-0">
@@ -57,7 +60,7 @@ export function AdminSidebar() {
             <span className="text-white font-bold text-sm">GB</span>
           </div>
           <span className="text-white text-sm font-medium leading-tight">
-            Back-office Consulaire
+            {t("admin.backoffice_title")}
           </span>
         </div>
       </SidebarHeader>
@@ -67,7 +70,7 @@ export function AdminSidebar() {
         {/* GESTION */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-white/40 text-xs uppercase tracking-wider px-2">
-            Gestion
+            {t("admin.gestion")}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
