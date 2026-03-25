@@ -29,7 +29,7 @@ export interface VisaFormData {
   hasProofOfFunds: boolean;
   additionalNotes?: string;
   // Step 4: Confirmation
-  confirmation: boolean;
+  confirmation: true;
 }
 
 export const visaFormSchema = z.object({
@@ -54,11 +54,11 @@ export const visaFormSchema = z.object({
   invitingPersonAddress: z.string().optional(),
   accommodationType: z.string().min(1, "Le type d'hébergement est requis"),
   // Step 3
-  hasPassportScan: z.boolean().default(false),
-  hasPhoto: z.boolean().default(false),
-  hasInvitationLetter: z.boolean().default(false),
-  hasProofOfAccommodation: z.boolean().default(false),
-  hasProofOfFunds: z.boolean().default(false),
+  hasPassportScan: z.boolean(),
+  hasPhoto: z.boolean(),
+  hasInvitationLetter: z.boolean(),
+  hasProofOfAccommodation: z.boolean(),
+  hasProofOfFunds: z.boolean(),
   additionalNotes: z.string().optional(),
   // Step 4
   confirmation: z.literal(true, "Vous devez certifier l'exactitude des informations"),
