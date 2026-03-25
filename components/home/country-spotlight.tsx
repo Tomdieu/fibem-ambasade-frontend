@@ -20,6 +20,7 @@ export function CountrySpotlight() {
               src="/guinee-bissau.png"
               alt="Guinée-Bissau"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
           </div>
