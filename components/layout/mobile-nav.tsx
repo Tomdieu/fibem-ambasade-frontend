@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import type { NavItem } from "@/types";
+import { useI18n } from "@/locales/client";
 import {
   Accordion,
   AccordionContent,
@@ -23,6 +24,7 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ navItems, isOpen, onClose }: MobileNavProps) {
+  const t = useI18n();
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent side="right" className="w-75 sm:max-w-75 p-0">
@@ -71,6 +73,24 @@ export function MobileNav({ navItems, isOpen, onClose }: MobileNavProps) {
             })}
           </Accordion>
         </nav>
+
+        {/* Auth Links */}
+        <div className="border-t px-4 py-4 space-y-2">
+          <Link
+            href="/auth/login"
+            onClick={onClose}
+            className="block w-full text-center py-2 text-sm font-medium text-(--color-gb-red) hover:text-(--color-gb-red)/80 transition-colors"
+          >
+            {t("auth.login_btn")}
+          </Link>
+          <Link
+            href="/auth/register"
+            onClick={onClose}
+            className="block w-full text-center py-2 px-4 text-sm font-medium bg-(--color-gb-red) text-white rounded-[var(--radius-card)] hover:bg-(--color-gb-red)/90 transition-colors"
+          >
+            {t("auth.register_link")}
+          </Link>
+        </div>
       </SheetContent>
     </Sheet>
   );
