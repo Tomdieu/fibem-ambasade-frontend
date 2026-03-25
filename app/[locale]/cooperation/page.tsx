@@ -4,54 +4,57 @@ import { DollarSign, BookOpen, GraduationCap, Heart } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageHero } from "@/components/ui/page-hero";
+import { getI18n } from "@/locales/server";
 
 export const metadata: Metadata = { title: "Coopération" };
 
-const COOPERATION_DOMAINS = [
-  {
-    icon: <DollarSign className="size-5 text-[var(--color-gb-green)]" />,
-    title: "Coopération économique",
-    description:
-      "La France soutient le développement économique de la Guinée-Bissau à travers des programmes de renforcement des capacités institutionnelles, de modernisation du secteur privé et de diversification des exportations, notamment dans la filière cajou.",
-  },
-  {
-    icon: <BookOpen className="size-5 text-[var(--color-gb-green)]" />,
-    title: "Coopération culturelle",
-    description:
-      "Les échanges culturels entre les deux pays se manifestent à travers des festivals, des expositions artistiques et des résidences de création. L'Institut français de Bissau joue un rôle central dans la diffusion de la langue française et la promotion des cultures locales.",
-  },
-  {
-    icon: <GraduationCap className="size-5 text-[var(--color-gb-green)]" />,
-    title: "Coopération éducative",
-    description:
-      "Des bourses d'études permettent chaque année à des étudiants bissau-guinéens de poursuivre leur formation en France. Des programmes de formation professionnelle et de renforcement du système éducatif national sont également financés dans le cadre de la coopération bilatérale.",
-  },
-  {
-    icon: <Heart className="size-5 text-[var(--color-gb-green)]" />,
-    title: "Aide humanitaire",
-    description:
-      "En cas de crises sanitaires ou naturelles, la France mobilise une aide humanitaire d'urgence pour la Guinée-Bissau. Des ONG françaises opèrent sur le terrain dans les domaines de la santé maternelle et infantile, de la nutrition et de l'accès à l'eau potable.",
-  },
-];
+export default async function CooperationPage() {
+  const t = await getI18n();
 
-const ONGOING_PROJECTS = [
-  "Programme d'appui à la réforme du système de santé (PARS) — financement AFD",
-  "Projet de développement durable de la filière cajou (PADDEC) — 2024–2027",
-  "Renforcement du système éducatif et formation des enseignants — coopération décentralisée",
-  "Programme d'électrification rurale par énergie solaire dans les régions de Bafatá et Gabu",
-];
+  const COOPERATION_DOMAINS = [
+    {
+      icon: <DollarSign className="size-5 text-[var(--color-gb-green)]" />,
+      title: "Coopération économique",
+      description:
+        "La France soutient le développement économique de la Guinée-Bissau à travers des programmes de renforcement des capacités institutionnelles, de modernisation du secteur privé et de diversification des exportations, notamment dans la filière cajou.",
+    },
+    {
+      icon: <BookOpen className="size-5 text-[var(--color-gb-green)]" />,
+      title: "Coopération culturelle",
+      description:
+        "Les échanges culturels entre les deux pays se manifestent à travers des festivals, des expositions artistiques et des résidences de création. L'Institut français de Bissau joue un rôle central dans la diffusion de la langue française et la promotion des cultures locales.",
+    },
+    {
+      icon: <GraduationCap className="size-5 text-[var(--color-gb-green)]" />,
+      title: "Coopération éducative",
+      description:
+        "Des bourses d'études permettent chaque année à des étudiants bissau-guinéens de poursuivre leur formation en France. Des programmes de formation professionnelle et de renforcement du système éducatif national sont également financés dans le cadre de la coopération bilatérale.",
+    },
+    {
+      icon: <Heart className="size-5 text-[var(--color-gb-green)]" />,
+      title: "Aide humanitaire",
+      description:
+        "En cas de crises sanitaires ou naturelles, la France mobilise une aide humanitaire d'urgence pour la Guinée-Bissau. Des ONG françaises opèrent sur le terrain dans les domaines de la santé maternelle et infantile, de la nutrition et de l'accès à l'eau potable.",
+    },
+  ];
 
-export default function CooperationPage() {
+  const ONGOING_PROJECTS = [
+    "Programme d'appui à la réforme du système de santé (PARS) — financement AFD",
+    "Projet de développement durable de la filière cajou (PADDEC) — 2024–2027",
+    "Renforcement du système éducatif et formation des enseignants — coopération décentralisée",
+    "Programme d'électrification rurale par énergie solaire dans les régions de Bafatá et Gabu",
+  ];
+
   return (
     <>
       <Header />
       <main className="flex-1">
         <PageHero
-          title="Coopération"
-          subtitle="Coopération franco-bissau-guinéenne"
+          title={t("pages_content.cooperation.title")}
+          subtitle={t("pages_content.cooperation.subtitle")}
           breadcrumbs={[
-            { label: "Accueil", href: "/" },
-            { label: "Coopération" },
+            { label: t("nav.home"), href: "/" },
+            { label: t("pages_content.cooperation.title") },
           ]}
         />
         <section className="max-w-7xl mx-auto px-[var(--spacing-container)] py-12 space-y-10">
@@ -59,12 +62,12 @@ export default function CooperationPage() {
           <p className="text-[var(--color-text-body)] leading-relaxed max-w-3xl">
             La coopération entre la France et la Guinée-Bissau repose sur
             des liens historiques, culturels et humains profonds. Depuis
-            l&apos;indépendance de la Guinée-Bissau en 1974, les deux pays
+            l'indépendance de la Guinée-Bissau en 1974, les deux pays
             ont développé une relation de partenariat fondée sur le respect
-            mutuel et la solidarité. La France est l&apos;un des principaux
+            mutuel et la solidarité. La France est l'un des principaux
             partenaires au développement de la Guinée-Bissau, intervenant
-            dans des domaines variés allant de l&apos;aide budgétaire aux
-            projets d&apos;infrastructure, en passant par les échanges
+            dans des domaines variés allant de l'aide budgétaire aux
+            projets d'infrastructure, en passant par les échanges
             académiques et culturels.
           </p>
 
@@ -103,7 +106,7 @@ export default function CooperationPage() {
             <p className="text-[var(--color-text-body)] leading-relaxed">
               Au-delà des relations bilatérales entre les deux gouvernements,
               la coopération franco-bissau-guinéenne implique un large
-              écosystème d&apos;acteurs : collectivités territoriales
+              écosystème d'acteurs : collectivités territoriales
               françaises engagées dans des jumelages, universités et grandes
               écoles accueillant des étudiants bissau-guinéens, entreprises
               françaises investissant dans des secteurs porteurs, et
