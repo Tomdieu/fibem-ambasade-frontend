@@ -78,7 +78,6 @@ export default function DashboardPage() {
           <p className="text-sm text-muted-foreground capitalize">{today}</p>
         </div>
         <Button
-          asChild
           className="bg-[var(--color-gb-red)] text-white hover:bg-[var(--color-gb-red)]/90 w-fit"
         >
           <Link href="/services/visa">Nouvelle demande</Link>
