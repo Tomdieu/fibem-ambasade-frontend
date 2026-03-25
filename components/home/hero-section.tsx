@@ -1,0 +1,101 @@
+"use client";
+
+import { BookOpen, Stamp, UserPlus } from "lucide-react";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+
+interface QuickAccessCard {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  href: string;
+}
+
+const QUICK_ACCESS_CARDS: QuickAccessCard[] = [
+  {
+    icon: Stamp,
+    title: "Demande de visa",
+    description: "Déposez votre dossier en ligne",
+    href: "/services/visa",
+  },
+  {
+    icon: BookOpen,
+    title: "Passeport",
+    description: "Renouvellement et première demande",
+    href: "/services/passeport",
+  },
+  {
+    icon: UserPlus,
+    title: "Inscription consulaire",
+    description: "Enregistrez-vous auprès de l'ambassade",
+    href: "/services/inscription",
+  },
+];
+
+export function HeroSection() {
+  return (
+    <section className="min-h-145 bg-gb-green flex flex-col md:flex-row">
+      {/* Left */}
+      <div className="md:w-[55%] px-8 md:px-20 py-16 flex flex-col justify-center">
+        <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full inline-block mb-4 w-fit">
+          Site Officiel
+        </span>
+
+        <h1 className="text-4xl md:text-5xl font-medium text-white leading-tight">
+          Bienvenue à l&apos;Ambassade de Guinée-Bissau en France
+        </h1>
+
+        <p className="text-white/80 text-lg mt-4 max-w-md">
+          Retrouvez tous les services consulaires, les informations officielles
+          et les démarches administratives de la République de Guinée-Bissau.
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button
+            className="bg-white text-gb-dark hover:bg-gb-green hover:text-white font-medium"
+            render={<Link href="/services/visa" />}
+          >
+            Demander un visa
+          </Button>
+          <Button
+            variant="outline"
+            className="border-white bg-gb-green text-white hover:bg-white hover:text-black"
+            render={<Link href="/services" />}
+          >
+            Nos services
+          </Button>
+        </div>
+      </div>
+
+      {/* Right */}
+      <div className="md:w-[45%] flex items-center justify-center px-8 py-12">
+        <div className="flex flex-col gap-3 md:translate-x-6 w-full max-w-sm">
+          {QUICK_ACCESS_CARDS.map((card) => {
+            const Icon = card.icon;
+            return (
+              <Link
+                key={card.href}
+                href={card.href}
+                className="bg-white rounded-card border p-4 flex items-center gap-3 hover:shadow-md transition-shadow"
+              >
+                <div className="w-10 h-10 bg-gb-green/10 text-gb-green rounded-full flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gb-dark">
+                    {card.title}
+                  </p>
+                  <p className="text-xs text-text-muted">
+                    {card.description}
+                  </p>
+                </div>
+                <span className="text-gb-red ml-auto shrink-0">→</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
