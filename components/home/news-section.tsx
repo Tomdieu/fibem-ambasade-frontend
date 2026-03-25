@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 
 import { NewsCard } from "@/components/ui/news-card";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useI18n } from "@/locales/client";
 
 export interface NewsPost {
   category: string;
@@ -17,16 +20,18 @@ interface NewsSectionProps {
 }
 
 export function NewsSection({ posts }: NewsSectionProps) {
+  const t = useI18n();
+
   return (
     <div>
       <SectionHeading
-        title="Actualités"
+        title={t("home_page.news_section_title")}
         action={
           <Link
             href="/actualites"
             className="text-gb-red text-sm"
           >
-            Voir toutes les actualités →
+            {t("home_page.news_see_all")}
           </Link>
         }
       />
