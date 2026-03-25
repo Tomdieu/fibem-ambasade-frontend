@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -17,7 +18,7 @@ interface PageHeroProps {
 
 export function PageHero({ title, subtitle, breadcrumbs }: PageHeroProps) {
   return (
-    <div className="bg-[var(--color-gb-dark)] py-12 md:py-16 w-full">
+    <div className="bg-(--color-gb-dark) py-12 md:py-16 w-full">
       <div className="max-w-7xl mx-auto px-[var(--spacing-container)]">
         {breadcrumbs && breadcrumbs.length > 0 && (
           <Breadcrumb className="mb-4">
@@ -25,13 +26,13 @@ export function PageHero({ title, subtitle, breadcrumbs }: PageHeroProps) {
               {breadcrumbs.map((crumb, index) => {
                 const isLast = index === breadcrumbs.length - 1;
                 return (
-                  <BreadcrumbItem key={index}>
-                    {isLast ? (
-                      <BreadcrumbPage className="text-white/70">
-                        {crumb.label}
-                      </BreadcrumbPage>
-                    ) : (
-                      <>
+                  <React.Fragment key={index}>
+                    <BreadcrumbItem>
+                      {isLast ? (
+                        <BreadcrumbPage className="text-white/70">
+                          {crumb.label}
+                        </BreadcrumbPage>
+                      ) : (
                         <BreadcrumbLink
                           render={
                             crumb.href ? (
@@ -46,10 +47,10 @@ export function PageHero({ title, subtitle, breadcrumbs }: PageHeroProps) {
                             )
                           }
                         />
-                        <BreadcrumbSeparator className="text-white/40" />
-                      </>
-                    )}
-                  </BreadcrumbItem>
+                      )}
+                    </BreadcrumbItem>
+                    {!isLast && <BreadcrumbSeparator className="text-white/40" />}
+                  </React.Fragment>
                 );
               })}
             </BreadcrumbList>
