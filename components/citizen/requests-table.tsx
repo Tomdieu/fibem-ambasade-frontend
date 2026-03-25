@@ -11,7 +11,11 @@ interface RequestsTableProps {
   requests: VisaRequest[];
 }
 
-const columns: ColumnDef<VisaRequest>[] = [
+// VisaRequest satisfies Record<string, unknown> since all values are serialisable.
+// We cast once here and keep full type access via row.original.
+type VisaRow = VisaRequest & Record<string, unknown>;
+
+const columns: ColumnDef<VisaRow>[] = [
   {
     accessorKey: "reference",
     header: "Référence",
@@ -45,6 +49,7 @@ const columns: ColumnDef<VisaRequest>[] = [
   {
     id: "actions",
     header: "",
+    accessorFn: (row) => row.id,
     cell: ({ row }) => <RequestRowActions requestId={row.original.id} />,
   },
 ];
@@ -53,7 +58,7 @@ export function RequestsTable({ requests }: RequestsTableProps) {
   return (
     <DataTableWrapper
       columns={columns}
-      data={requests as unknown as Record<string, unknown>[]}
+      data={requests as VisaRow[]}
       searchKey="reference"
     />
   );
