@@ -15,6 +15,7 @@ import { StepPersonalInfo } from "./step-personal-info";
 import { StepTravelDetails } from "./step-travel-details";
 import { StepDocuments } from "./step-documents";
 import { StepConfirmation } from "./step-confirmation";
+import { useI18n } from "@/locales/client";
 
 const STEP_FIELDS: Record<number, (keyof VisaFormData)[]> = {
   1: [
@@ -42,6 +43,7 @@ const STEP_FIELDS: Record<number, (keyof VisaFormData)[]> = {
 };
 
 export function VisaFormWizard() {
+  const t = useI18n();
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
@@ -103,10 +105,10 @@ export function VisaFormWizard() {
         setReference(result.reference);
         setSubmitted(true);
       } else {
-        setSubmitError(result.error ?? "Une erreur est survenue.");
+        setSubmitError(result.error ?? t("visa_form_wizard.error_generic"));
       }
     } catch {
-      setSubmitError("Une erreur réseau est survenue. Veuillez réessayer.");
+      setSubmitError(t("visa_form_wizard.error_network"));
     } finally {
       setIsSubmitting(false);
     }
@@ -121,19 +123,19 @@ export function VisaFormWizard() {
           </div>
         </div>
         <h2 className="text-xl font-semibold text-(--color-gb-dark) mb-2">
-          Demande soumise avec succès
+          {t("visa_form_wizard.success_title")}
         </h2>
         <p className="text-sm text-(--color-text-muted) mb-4">
-          Votre demande de visa a été enregistrée. Vous recevrez une confirmation par email.
+          {t("visa_form_wizard.success_desc")}
         </p>
         <div className="inline-flex items-center gap-2 bg-(--color-surface-page) rounded-lg px-6 py-3">
-          <span className="text-xs text-(--color-text-muted)">Numéro de référence</span>
+          <span className="text-xs text-(--color-text-muted)">{t("visa_form_wizard.reference_number")}</span>
           <span className="text-sm font-mono font-semibold text-(--color-gb-dark)">
             {reference}
           </span>
         </div>
         <p className="text-xs text-(--color-text-muted) mt-4">
-          Conservez ce numéro pour le suivi de votre dossier.
+          {t("visa_form_wizard.keep_reference")}
         </p>
       </div>
     );
@@ -222,7 +224,7 @@ export function VisaFormWizard() {
                 variant="ghost"
                 onClick={() => setCurrentStep((s) => s - 1)}
               >
-                Précédent
+                {t("visa_form_wizard.btn_prev")}
               </Button>
             ) : (
               <div />
@@ -234,7 +236,7 @@ export function VisaFormWizard() {
                 onClick={handleNext}
                 className="bg-(--color-gb-red) text-white hover:bg-gb-red/90"
               >
-                Suivant →
+                {t("visa_form_wizard.btn_next")}
               </Button>
             ) : (
               <Button
@@ -242,7 +244,7 @@ export function VisaFormWizard() {
                 disabled={isSubmitting}
                 className="bg-(--color-gb-red) text-white hover:bg-gb-red/90"
               >
-                {isSubmitting ? "Envoi en cours..." : "Soumettre la demande"}
+                {isSubmitting ? t("visa_form_wizard.btn_submitting") : t("visa_form_wizard.btn_submit")}
               </Button>
             )}
           </div>
