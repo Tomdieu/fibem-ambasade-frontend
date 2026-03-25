@@ -23,6 +23,8 @@ import { bookAppointment } from "@/actions/booking-actions";
 import { bookingSchema, type BookingFormData } from "@/types/appointment";
 import type { ServiceType } from "@/types";
 
+import { useI18n } from "@/locales/client";
+
 const TIME_SLOTS = [
   "09:00",
   "09:30",
@@ -38,39 +40,41 @@ const TIME_SLOTS = [
   "16:30",
 ] as const;
 
-const SERVICES: {
-  value: ServiceType;
-  label: string;
-  icon: React.ReactNode;
-  duration: string;
-}[] = [
-  {
-    value: "visa",
-    label: "Demande de visa",
-    icon: <FileText className="size-4 shrink-0" />,
-    duration: "45 min",
-  },
-  {
-    value: "passeport",
-    label: "Passeport",
-    icon: <BookOpen className="size-4 shrink-0" />,
-    duration: "30 min",
-  },
-  {
-    value: "legalisation",
-    label: "Légalisation",
-    icon: <FileCheck className="size-4 shrink-0" />,
-    duration: "20 min",
-  },
-  {
-    value: "rendezvous",
-    label: "Rendez-vous général",
-    icon: <Calendar className="size-4 shrink-0" />,
-    duration: "15 min",
-  },
-];
-
 export function BookingWizard() {
+  const t = useI18n();
+
+  const SERVICES: {
+    value: ServiceType;
+    label: string;
+    icon: React.ReactNode;
+    duration: string;
+  }[] = [
+    {
+      value: "visa",
+      label: t("booking_wizard.service_visa"),
+      icon: <FileText className="size-4 shrink-0" />,
+      duration: "45 min",
+    },
+    {
+      value: "passeport",
+      label: t("booking_wizard.service_passport"),
+      icon: <BookOpen className="size-4 shrink-0" />,
+      duration: "30 min",
+    },
+    {
+      value: "legalisation",
+      label: t("booking_wizard.service_legalisation"),
+      icon: <FileCheck className="size-4 shrink-0" />,
+      duration: "20 min",
+    },
+    {
+      value: "rendezvous",
+      label: t("booking_wizard.service_general"),
+      icon: <Calendar className="size-4 shrink-0" />,
+      duration: "15 min",
+    },
+  ];
+
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -121,10 +125,10 @@ export function BookingWizard() {
       if (result.success && result.confirmationNumber) {
         setConfirmationNumber(result.confirmationNumber);
       } else {
-        setSubmitError(result.error ?? "Une erreur est survenue.");
+        setSubmitError(result.error ?? t("booking_wizard.error_generic"));
       }
     } catch {
-      setSubmitError("Une erreur réseau est survenue. Veuillez réessayer.");
+      setSubmitError(t("booking_wizard.error_network"));
     } finally {
       setIsSubmitting(false);
     }
@@ -137,7 +141,7 @@ export function BookingWizard() {
       {/* Left panel */}
       <div className="lg:w-[38%] bg-(--color-surface-page) border-r p-6 flex flex-col gap-4">
         <h2 className="text-xl font-medium text-(--color-gb-dark)">
-          Prise de rendez-vous
+          {t("booking_wizard.title")}
         </h2>
 
         <RadioGroup
@@ -173,7 +177,7 @@ export function BookingWizard() {
 
         <div className="flex items-start gap-2 text-sm text-(--color-text-muted)">
           <MapPin className="size-4 shrink-0 mt-0.5 text-(--color-gb-red)" />
-          <span>24 Rue de la Pompe, 75116 Paris</span>
+          <span>{t("booking_wizard.address")}</span>
         </div>
       </div>
 
@@ -185,32 +189,32 @@ export function BookingWizard() {
               <CheckCircle className="size-8 text-emerald-500" />
             </div>
             <h3 className="text-lg font-semibold text-(--color-gb-dark)">
-              Rendez-vous confirmé
+              {t("booking_wizard.success_title")}
             </h3>
             <p className="text-sm text-(--color-text-muted)">
-              Votre rendez-vous a été enregistré avec succès.
+              {t("booking_wizard.success_subtitle")}
             </p>
             <div className="inline-flex items-center gap-2 bg-(--color-surface-page) rounded-lg px-6 py-3">
               <span className="text-xs text-(--color-text-muted)">
-                Numéro de confirmation
+                {t("booking_wizard.confirmation_number")}
               </span>
               <span className="text-sm font-mono font-semibold text-(--color-gb-dark)">
                 {confirmationNumber}
               </span>
             </div>
             <p className="text-xs text-(--color-text-muted)">
-              Un email de confirmation vous a été envoyé.
+              {t("booking_wizard.success_email_sent")}
             </p>
           </div>
         ) : step === 1 ? (
           <div className="flex flex-col gap-5">
             <h3 className="text-sm font-semibold text-(--color-gb-dark)">
-              Étape 1 — Choisissez une date et une heure
+              {t("booking_wizard.step_1_title")}
             </h3>
 
             <div>
               <Label htmlFor="booking-date" className="mb-1 block">
-                Date souhaitée
+                {t("booking_wizard.desired_date")}
               </Label>
               <Input
                 id="booking-date"
@@ -223,7 +227,7 @@ export function BookingWizard() {
 
             <div>
               <p className="text-xs font-medium text-(--color-gb-dark) mb-2">
-                Créneaux disponibles
+                {t("booking_wizard.available_slots")}
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {TIME_SLOTS.map((time) => (
@@ -251,14 +255,14 @@ export function BookingWizard() {
                 onClick={handleStepOneNext}
                 className="bg-(--color-gb-red) text-white hover:bg-gb-red/90"
               >
-                Suivant →
+                {t("booking_wizard.next_btn")}
               </Button>
             </div>
           </div>
         ) : step === 2 ? (
           <form onSubmit={handleSubmit(onSubmitAttendee)} className="flex flex-col gap-4">
             <h3 className="text-sm font-semibold text-(--color-gb-dark)">
-              Étape 2 — Vos coordonnées
+              {t("booking_wizard.step_2_title")}
             </h3>
 
             <div className="grid grid-cols-2 gap-4">
@@ -268,7 +272,7 @@ export function BookingWizard() {
                 render={({ field, fieldState }) => (
                   <div>
                     <Label htmlFor="b-firstName" className="mb-1 block">
-                      Prénom <span className="text-red-500">*</span>
+                      {t("booking_wizard.first_name")} <span className="text-red-500">*</span>
                     </Label>
                     <Input id="b-firstName" placeholder="Jean" {...field} />
                     {fieldState.error && (
@@ -284,7 +288,7 @@ export function BookingWizard() {
                 render={({ field, fieldState }) => (
                   <div>
                     <Label htmlFor="b-lastName" className="mb-1 block">
-                      Nom <span className="text-red-500">*</span>
+                      {t("booking_wizard.last_name")} <span className="text-red-500">*</span>
                     </Label>
                     <Input id="b-lastName" placeholder="Dupont" {...field} />
                     {fieldState.error && (
@@ -301,7 +305,7 @@ export function BookingWizard() {
               render={({ field, fieldState }) => (
                 <div>
                   <Label htmlFor="b-email" className="mb-1 block">
-                    Adresse email <span className="text-red-500">*</span>
+                    {t("booking_wizard.email")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="b-email"
@@ -322,7 +326,7 @@ export function BookingWizard() {
               render={({ field, fieldState }) => (
                 <div>
                   <Label htmlFor="b-phone" className="mb-1 block">
-                    Téléphone <span className="text-red-500">*</span>
+                    {t("booking_wizard.phone")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="b-phone"
@@ -343,12 +347,12 @@ export function BookingWizard() {
               render={({ field }) => (
                 <div>
                   <Label htmlFor="b-notes" className="mb-1 block">
-                    Notes{" "}
-                    <span className="text-xs text-(--color-text-muted)">(optionnel)</span>
+                    {t("booking_wizard.notes")}{" "}
+                    <span className="text-xs text-(--color-text-muted)">{t("booking_wizard.optional")}</span>
                   </Label>
                   <Textarea
                     id="b-notes"
-                    placeholder="Informations complémentaires..."
+                    placeholder={t("booking_wizard.notes_placeholder")}
                     {...field}
                   />
                 </div>
@@ -361,50 +365,50 @@ export function BookingWizard() {
                 variant="ghost"
                 onClick={() => setStep(1)}
               >
-                Retour
+                {t("booking_wizard.back_btn")}
               </Button>
               <Button
                 type="submit"
                 className="bg-(--color-gb-red) text-white hover:bg-gb-red/90"
               >
-                Suivant →
+                {t("booking_wizard.next_btn")}
               </Button>
             </div>
           </form>
         ) : (
           <div className="flex flex-col gap-5">
             <h3 className="text-sm font-semibold text-(--color-gb-dark)">
-              Étape 3 — Confirmation
+              {t("booking_wizard.step_3_title")}
             </h3>
 
             <div className="bg-(--color-surface-page) rounded-lg p-4 flex flex-col gap-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Service</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.service_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">
                     {SERVICES.find((s) => s.value === selectedService)?.label}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Date</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.date_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">{selectedDate}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Heure</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.time_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">{selectedTime}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Nom</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.name_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">
                     {formValues.firstName} {formValues.lastName}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Email</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.email_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">{formValues.email}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-(--color-text-muted)">Téléphone</p>
+                  <p className="text-xs text-(--color-text-muted)">{t("booking_wizard.phone_summary")}</p>
                   <p className="text-xs font-medium mt-0.5">{formValues.phone}</p>
                 </div>
               </div>
@@ -420,7 +424,7 @@ export function BookingWizard() {
                 variant="ghost"
                 onClick={() => setStep(2)}
               >
-                Modifier
+                {t("booking_wizard.edit_btn")}
               </Button>
               <Button
                 type="button"
@@ -428,7 +432,7 @@ export function BookingWizard() {
                 onClick={onConfirm}
                 className="bg-(--color-gb-red) text-white hover:bg-gb-red/90"
               >
-                {isSubmitting ? "Confirmation..." : "Confirmer le rendez-vous"}
+                {isSubmitting ? t("booking_wizard.confirming_btn") : t("booking_wizard.confirm_btn")}
               </Button>
             </div>
           </div>
