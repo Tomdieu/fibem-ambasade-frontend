@@ -100,7 +100,7 @@ export function AdminSidebar() {
         {/* RAPPORTS */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-white/40 text-xs uppercase tracking-wider px-2">
-            Rapports
+            {t("admin.rapports")}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -130,7 +130,7 @@ export function AdminSidebar() {
         {/* SYSTÈME */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-white/40 text-xs uppercase tracking-wider px-2">
-            Système
+            {t("admin.systeme")}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -163,13 +163,13 @@ export function AdminSidebar() {
         <div className="flex items-center justify-between gap-2">
           <div className="flex-1 min-w-0">
             <p className="text-white text-xs font-medium truncate">Marie Dupont</p>
-            <p className="text-white/60 text-xs truncate">Administratrice</p>
+            <p className="text-white/60 text-xs truncate">{t("admin.role_admin")}</p>
           </div>
           <form action={logoutAction}>
             <button
               type="submit"
               className="flex items-center justify-center w-8 h-8 rounded-md text-white/60 hover:text-white hover:bg-white/10 transition-colors"
-              title="Se déconnecter"
+              title={t("admin.logout")}
             >
               <LogOut className="w-4 h-4" />
             </button>
