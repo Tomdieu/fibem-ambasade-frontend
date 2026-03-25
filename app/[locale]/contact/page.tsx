@@ -8,22 +8,25 @@ import { PageHero } from "@/components/ui/page-hero"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { ContactForm } from "@/components/contact/contact-form"
+import { getI18n } from "@/locales/server"
 
 export const metadata: Metadata = {
   title: "Contact",
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getI18n();
+
   return (
     <>
       <Header />
       <main className="flex-1">
         <PageHero
-          title="Contact"
-          subtitle="Contactez l'Ambassade de Guinée-Bissau en France"
+          title={t("pages_content.contact.title")}
+          subtitle={t("pages_content.contact.subtitle")}
           breadcrumbs={[
-            { label: "Accueil", href: "/" },
-            { label: "Contact" },
+            { label: t("nav.home"), href: "/" },
+            { label: t("pages_content.contact.title") },
           ]}
         />
 
@@ -39,13 +42,13 @@ export default function ContactPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-sm font-medium text-[var(--color-gb-dark)]">
                     <MapPin className="size-4 text-[var(--color-gb-red)] shrink-0" />
-                    Adresse
+                    {t("pages_content.contact.address")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <p className="text-xs text-[var(--color-text-body)]">
-                    24 Rue de la Pompe<br />
-                    75116 Paris, France
+                    {t("pages_content.contact.address_value")}<br />
+                    {t("pages_content.contact.city_value")}
                   </p>
                   <Link
                     href="https://maps.google.com/?q=24+Rue+de+la+Pompe+75116+Paris"
@@ -53,7 +56,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-[var(--color-gb-red)] hover:underline"
                   >
-                    Voir sur Google Maps
+                    {t("pages_content.contact.view_map")}
                     <ExternalLink className="size-3" />
                   </Link>
                 </CardContent>
@@ -64,28 +67,28 @@ export default function ContactPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-sm font-medium text-[var(--color-gb-dark)]">
                     <Clock className="size-4 text-[var(--color-gb-red)] shrink-0" />
-                    Horaires d&apos;ouverture
+                    {t("pages_content.contact.opening_hours")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <table className="w-full text-xs">
                     <tbody className="divide-y divide-border">
                       <tr>
-                        <td className="py-1.5 text-[var(--color-text-muted)]">Lun – Ven</td>
+                        <td className="py-1.5 text-[var(--color-text-muted)]">{t("pages_content.contact.opening_days")}</td>
                         <td className="py-1.5 text-right font-medium text-[var(--color-text-body)]">
-                          9h00 – 17h00
+                          {t("pages_content.contact.opening_times")}
                         </td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 text-[var(--color-text-muted)]">Samedi</td>
+                        <td className="py-1.5 text-[var(--color-text-muted)]">{t("pages_content.contact.saturday")}</td>
                         <td className="py-1.5 text-right font-medium text-red-500">
-                          Fermé
+                          {t("pages_content.contact.closed")}
                         </td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 text-[var(--color-text-muted)]">Dimanche</td>
+                        <td className="py-1.5 text-[var(--color-text-muted)]">{t("pages_content.contact.sunday")}</td>
                         <td className="py-1.5 text-right font-medium text-red-500">
-                          Fermé
+                          {t("pages_content.contact.closed")}
                         </td>
                       </tr>
                     </tbody>
@@ -97,7 +100,7 @@ export default function ContactPage() {
               <Card className="bg-white">
                 <CardHeader>
                   <CardTitle className="text-sm font-medium text-[var(--color-gb-dark)]">
-                    Coordonnées
+                    {t("pages_content.contact.coordinates")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -127,7 +130,7 @@ export default function ContactPage() {
               <Card className="bg-white">
                 <CardHeader>
                   <CardTitle className="text-sm font-medium text-[var(--color-gb-dark)]">
-                    Suivez-nous
+                    {t("pages_content.contact.social_links")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -135,26 +138,26 @@ export default function ContactPage() {
                     <Link
                       href="#"
                       className="inline-flex items-center gap-1.5 rounded-[var(--radius-badge)] border border-border px-3 py-1.5 text-xs font-medium text-[var(--color-text-body)] hover:border-[var(--color-gb-red)] hover:text-[var(--color-gb-red)] transition-colors"
-                      aria-label="Facebook"
+                      aria-label={t("pages_content.contact.facebook")}
                     >
                       <ExternalLink className="size-3" />
-                      Facebook
+                      {t("pages_content.contact.facebook")}
                     </Link>
                     <Link
                       href="#"
                       className="inline-flex items-center gap-1.5 rounded-[var(--radius-badge)] border border-border px-3 py-1.5 text-xs font-medium text-[var(--color-text-body)] hover:border-[var(--color-gb-red)] hover:text-[var(--color-gb-red)] transition-colors"
-                      aria-label="Twitter / X"
+                      aria-label={t("pages_content.contact.twitter")}
                     >
                       <ExternalLink className="size-3" />
-                      Twitter
+                      {t("pages_content.contact.twitter")}
                     </Link>
                     <Link
                       href="#"
                       className="inline-flex items-center gap-1.5 rounded-[var(--radius-badge)] border border-border px-3 py-1.5 text-xs font-medium text-[var(--color-text-body)] hover:border-[var(--color-gb-red)] hover:text-[var(--color-gb-red)] transition-colors"
-                      aria-label="LinkedIn"
+                      aria-label={t("pages_content.contact.linkedin")}
                     >
                       <ExternalLink className="size-3" />
-                      LinkedIn
+                      {t("pages_content.contact.linkedin")}
                     </Link>
                   </div>
                 </CardContent>
