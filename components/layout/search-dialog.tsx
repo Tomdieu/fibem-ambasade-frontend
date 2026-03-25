@@ -42,18 +42,30 @@ export function SearchDialog() {
   const t = useI18n();
 
   const SEARCH_ITEMS = useMemo(() => ({
-    servicesConsulaires: SEARCH_ITEMS_PATHS.servicesConsulaires.map(item => ({
-      label: t(`search.${item.key}`),
-      href: item.href,
-    })),
-    pages: SEARCH_ITEMS_PATHS.pages.map(item => ({
-      label: t(`search.${item.key}`),
-      href: item.href,
-    })),
-    ressources: SEARCH_ITEMS_PATHS.ressources.map(item => ({
-      label: t(`search.${item.key}`),
-      href: item.href,
-    })),
+    servicesConsulaires: SEARCH_ITEMS_PATHS.servicesConsulaires.map(item => {
+      const key = `search.${item.key}` as any;
+      return {
+        // @ts-ignore - next-international dynamic key access
+        label: t(key),
+        href: item.href,
+      };
+    }),
+    pages: SEARCH_ITEMS_PATHS.pages.map(item => {
+      const key = `search.${item.key}` as any;
+      return {
+        // @ts-ignore - next-international dynamic key access
+        label: t(key),
+        href: item.href,
+      };
+    }),
+    ressources: SEARCH_ITEMS_PATHS.ressources.map(item => {
+      const key = `search.${item.key}` as any;
+      return {
+        // @ts-ignore - next-international dynamic key access
+        label: t(key),
+        href: item.href,
+      };
+    }),
   }), [t]);
 
   useEffect(() => {
