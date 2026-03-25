@@ -2,8 +2,10 @@
 
 import { BookOpen, Stamp, UserPlus } from "lucide-react";
 import Link from "next/link";
+import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/locales/client";
 
 interface QuickAccessCard {
   icon: React.ElementType;
@@ -12,43 +14,43 @@ interface QuickAccessCard {
   href: string;
 }
 
-const QUICK_ACCESS_CARDS: QuickAccessCard[] = [
-  {
-    icon: Stamp,
-    title: "Demande de visa",
-    description: "Déposez votre dossier en ligne",
-    href: "/services/visa",
-  },
-  {
-    icon: BookOpen,
-    title: "Passeport",
-    description: "Renouvellement et première demande",
-    href: "/services/passeport",
-  },
-  {
-    icon: UserPlus,
-    title: "Inscription consulaire",
-    description: "Enregistrez-vous auprès de l'ambassade",
-    href: "/services/inscription",
-  },
-];
-
 export function HeroSection() {
+  const t = useI18n();
+
+  const QUICK_ACCESS_CARDS = useMemo(() => [
+    {
+      icon: Stamp,
+      title: t("home_page.quick_visa_title"),
+      description: t("home_page.quick_visa_desc"),
+      href: "/services/visa",
+    },
+    {
+      icon: BookOpen,
+      title: t("home_page.quick_passport_title"),
+      description: t("home_page.quick_passport_desc"),
+      href: "/services/passeport",
+    },
+    {
+      icon: UserPlus,
+      title: t("home_page.quick_registration_title"),
+      description: t("home_page.quick_registration_desc"),
+      href: "/services/inscription",
+    },
+  ], [t]);
   return (
     <section className="min-h-145 bg-gb-green flex flex-col md:flex-row">
       {/* Left */}
       <div className="md:w-[55%] px-8 md:px-20 py-16 flex flex-col justify-center">
         <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full inline-block mb-4 w-fit">
-          Site Officiel
+          {t("home_page.official_badge")}
         </span>
 
         <h1 className="text-4xl md:text-5xl font-medium text-white leading-tight">
-          Bienvenue à l&apos;Ambassade de Guinée-Bissau en France
+          {t("home_page.hero_title")}
         </h1>
 
         <p className="text-white/80 text-lg mt-4 max-w-md">
-          Retrouvez tous les services consulaires, les informations officielles
-          et les démarches administratives de la République de Guinée-Bissau.
+          {t("home_page.hero_subtitle")}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -56,14 +58,14 @@ export function HeroSection() {
             className="bg-white text-gb-dark hover:bg-gb-green hover:text-white font-medium"
             render={<Link href="/services/visa" />}
           >
-            Demander un visa
+            {t("home_page.quick_visa_btn")}
           </Button>
           <Button
             variant="outline"
             className="border-white bg-gb-green text-white hover:bg-white hover:text-black"
             render={<Link href="/services" />}
           >
-            Nos services
+            {t("home_page.quick_services_btn")}
           </Button>
         </div>
       </div>
