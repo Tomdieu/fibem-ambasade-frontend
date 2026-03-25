@@ -28,30 +28,32 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Spinner } from "@/components/ui/spinner"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { cn } from "@/lib/utils"
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères."),
-  email: z.string().email("Adresse email invalide."),
-  phone: z.string().optional(),
-  subject: z.string().min(1, "Veuillez choisir un sujet."),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères."),
-  privacyConsent: z.literal(true, "Vous devez accepter la politique de confidentialité."),
-})
-
-type ContactFormValues = z.infer<typeof contactSchema>
-
-const SUBJECTS = [
-  { value: "information", label: "Information" },
-  { value: "consulaire", label: "Service consulaire" },
-  { value: "presse", label: "Presse" },
-  { value: "cooperation", label: "Coopération" },
-  { value: "autre", label: "Autre" },
-]
+import { useI18n } from "@/locales/client"
 
 export function ContactForm() {
+  const t = useI18n()
   const [success, setSuccess] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  
+  const contactSchema = z.object({
+    name: z.string().min(2, t("contact_form.name_error")),
+    email: z.string().email(t("contact_form.email_error")),
+    phone: z.string().optional(),
+    subject: z.string().min(1, t("contact_form.subject_required")),
+    message: z.string().min(10, t("contact_form.message_error")),
+    privacyConsent: z.literal(true, t("contact_form.privacy_required")),
+  })
+
+  type ContactFormValues = z.infer<typeof contactSchema>
+
+  const SUBJECTS = [
+    { value: "information", label: t("contact_form.subject_information") },
+    { value: "consulaire", label: t("contact_form.subject_consular") },
+    { value: "presse", label: t("contact_form.subject_press") },
+    { value: "cooperation", label: t("contact_form.subject_cooperation") },
+    { value: "autre", label: t("contact_form.subject_other") },
+  ]
 
   const {
     register,
@@ -76,7 +78,7 @@ export function ContactForm() {
       if (result.success) {
         setSuccess(true)
       } else {
-        setServerError(result.error ?? "Une erreur est survenue.")
+        setServerError(result.error ?? t("contact_form.error_message"))
       }
     })
   }
@@ -85,7 +87,7 @@ export function ContactForm() {
     <Card className="bg-white border rounded-card p-6">
       <CardHeader className="px-0 pt-0">
         <CardTitle>
-          <SectionHeading title="Envoyer un message" />
+          <SectionHeading title={t("contact_form.send_message")} />
         </CardTitle>
       </CardHeader>
       <CardContent className="px-0 pb-0">
@@ -93,11 +95,11 @@ export function ContactForm() {
           <div className="space-y-2">
             <Alert className="border-(--color-gb-green) bg-gb-green/10">
               <AlertDescription className="text-(--color-gb-green) font-medium">
-                Votre message a été envoyé. Nous vous répondrons dans les 3 jours ouvrés.
+                {t("contact_form.success_message")}
               </AlertDescription>
             </Alert>
             <p className="text-xs text-muted-foreground mt-2">
-              Merci de nous avoir contacté. Notre équipe consulaire traitera votre demande dans les meilleurs délais.
+              {t("contact_form.success_thanks")}
             </p>
           </div>
         ) : (
@@ -105,11 +107,11 @@ export function ContactForm() {
             {/* Name */}
             <div className="space-y-1.5">
               <Label htmlFor="name">
-                Nom complet <span className="text-red-500">*</span>
+                {t("contact_form.name_label")} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="name"
-                placeholder="Jean Dupont"
+                placeholder={t("contact_form.name_label")}
                 aria-invalid={!!errors.name}
                 {...register("name")}
               />
@@ -121,7 +123,7 @@ export function ContactForm() {
             {/* Email */}
             <div className="space-y-1.5">
               <Label htmlFor="email">
-                Adresse email <span className="text-red-500">*</span>
+                {t("contact_form.email_label")} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="email"
@@ -137,7 +139,7 @@ export function ContactForm() {
 
             {/* Phone */}
             <div className="space-y-1.5">
-              <Label htmlFor="phone">Téléphone (optionnel)</Label>
+              <Label htmlFor="phone">{t("contact_form.phone_label")}</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -149,7 +151,7 @@ export function ContactForm() {
             {/* Subject */}
             <div className="space-y-1.5">
               <Label htmlFor="subject">
-                Sujet <span className="text-red-500">*</span>
+                {t("contact_form.subject_label")} <span className="text-red-500">*</span>
               </Label>
               <Controller
                 name="subject"
@@ -164,7 +166,7 @@ export function ContactForm() {
                       className="w-full"
                       aria-invalid={!!errors.subject}
                     >
-                      <SelectValue placeholder="Choisir un sujet" />
+                      <SelectValue placeholder={t("contact_form.subject_label")} />
                     </SelectTrigger>
                     <SelectContent>
                       {SUBJECTS.map((s) => (
@@ -184,7 +186,7 @@ export function ContactForm() {
             {/* Message */}
             <div className="space-y-1.5">
               <Label htmlFor="message">
-                Message <span className="text-red-500">*</span>
+                {t("contact_form.message_label")} <span className="text-red-500">*</span>
               </Label>
               <Textarea
                 id="message"
@@ -220,7 +222,7 @@ export function ContactForm() {
                         errors.privacyConsent && "text-red-500"
                       )}
                     >
-                      J&apos;accepte la politique de confidentialité{" "}
+                      {t("contact_form.privacy_consent")}{" "}
                       <span className="text-red-500">*</span>
                     </Label>
                   </div>
@@ -247,10 +249,10 @@ export function ContactForm() {
               {isPending ? (
                 <>
                   <Spinner className="mr-2" />
-                  Envoi en cours…
+                  {t("contact_form.sending")}
                 </>
               ) : (
-                "Envoyer le message"
+                t("contact_form.send_btn")
               )}
             </Button>
 
