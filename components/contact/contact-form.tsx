@@ -93,7 +93,7 @@ export function ContactForm() {
       <CardContent className="px-0 pb-0">
         {success ? (
           <div className="space-y-2">
-            <Alert className="border-(--color-gb-green) bg-gb-green/10">
+            <Alert className="border-(--color-gb-green) bg-gb-blue/10">
               <AlertDescription className="text-(--color-gb-green) font-medium">
                 {t("contact_form.success_message")}
               </AlertDescription>
