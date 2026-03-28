@@ -290,7 +290,7 @@ Optional trend: green ↑ or red ↓ with percentage.
 
 ━━━ FILE: src/components/ui/service-tile.tsx ━━━
 Props: service: ServiceType, href: string, description: string
-Icon circle (48px, bg-gb-green/10, gb-green icon), title, short description, arrow link.
+Icon circle (48px, bg-gb-blue/10, gb-green icon), title, short description, arrow link.
 Entire tile is a next/link wrapper with hover:shadow-md transition.
 
 ━━━ FILE: src/components/ui/news-card.tsx ━━━
@@ -374,7 +374,7 @@ Render <ServiceTile> for: visa, passeport, legalisation, rendezvous, inscription
 
 ━━━ FILE: src/components/home/country-spotlight.tsx ━━━
 Two-column layout (md:grid-cols-2 gap-12).
-LEFT: next/image placeholder (aspect-video, rounded-card, bg-gb-green/10 as placeholder).
+LEFT: next/image placeholder (aspect-video, rounded-card, bg-gb-blue/10 as placeholder).
 RIGHT: SectionHeading + paragraph text + three StatCards in a 3-column grid
 (area, population, capital) + "En savoir plus →" Button variant=outline.
 
@@ -525,10 +525,10 @@ STEP 1 — Calendar + time slots:
 - Month navigator: "← {month} {year} →" with ChevronLeft/Right Buttons.
 - 7-column weekday header (Lun–Dim), text-xs text-muted.
 - Calendar grid: use shadcn Calendar component (mode="single", locale=fr).
-  Override day render: available=white hover:border-gb-green, unavailable=bg-surface-muted
+  Override day render: available=white hover:border-gb-blue, unavailable=bg-surface-muted
   text-muted cursor-not-allowed, selected=bg-gb-red text-white.
 - Time slots grid (3 cols, gap-2): pill buttons.
-  Available: border border-surface-muted hover:border-gb-green hover:text-gb-green.
+  Available: border border-surface-muted hover:border-gb-blue hover:text-gb-green.
   Selected: bg-gb-red text-white border-gb-red.
   Full: bg-surface-muted text-muted cursor-not-allowed opacity-60.
 
