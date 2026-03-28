@@ -38,7 +38,7 @@ export function HeroSection() {
     },
   ], [t]);
   return (
-    <section className="min-h-145 bg-gb-green flex flex-col md:flex-row">
+    <section className="min-h-145 bg-gb-blue flex flex-col md:flex-row">
       {/* Left */}
       <div className="md:w-[55%] px-8 md:px-20 py-16 flex flex-col justify-center">
         <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full inline-block mb-4 w-fit">
@@ -55,15 +55,18 @@ export function HeroSection() {
 
         <div className="mt-8 flex flex-wrap gap-3">
           <Button
-            className="bg-white text-gb-dark hover:bg-gb-green hover:text-white font-medium"
+            className="bg-white text-gb-dark hover:bg-gb-blue rounded-sm hover:text-white font-medium"
             render={<Link href="/services/visa" />}
+            size={"lg"}
           >
             {t("home_page.quick_visa_btn")}
           </Button>
           <Button
             variant="outline"
-            className="border-white bg-gb-green text-white hover:bg-white hover:text-black"
+            className="border-white bg-gb-blue text-white rounded-sm hover:bg-white hover:text-black"
             render={<Link href="/services" />}
+            size={"lg"}
+
           >
             {t("home_page.quick_services_btn")}
           </Button>
@@ -81,7 +84,7 @@ export function HeroSection() {
                 href={card.href}
                 className="bg-white rounded-card border p-4 flex items-center gap-3 hover:shadow-md transition-shadow"
               >
-                <div className="w-10 h-10 bg-gb-green/10 text-gb-green rounded-full flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 bg-gb-blue/10 text-gb-blue rounded-full flex items-center justify-center shrink-0">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
