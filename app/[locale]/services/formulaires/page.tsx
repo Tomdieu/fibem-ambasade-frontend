@@ -67,7 +67,7 @@ export default function FormulairesPag() {
 
         <section className="max-w-7xl mx-auto px-container py-12">
           {/* Notice */}
-          <div className="bg-gb-green/10 border-l-4 border-gb-green rounded-r-card p-4 mb-10 text-sm text-gb-dark">
+          <div className="bg-gb-blue/10 border-l-4 border-gb-blue rounded-r-card p-4 mb-10 text-sm text-gb-dark">
             <strong>Important :</strong> Ces formulaires doivent être imprimés, remplis et signés avant votre
             rendez-vous. Ils ne peuvent pas être soumis en ligne. Prenez{" "}
             <Link href="/services/rendez-vous" className="text-gb-red hover:underline font-medium">
@@ -82,7 +82,7 @@ export default function FormulairesPag() {
               return (
                 <div key={form.filename} className="bg-white border rounded-card p-6 flex flex-col gap-4 hover:shadow-md transition-shadow">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gb-green/10 text-gb-green flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-gb-blue/10 text-gb-green flex items-center justify-center flex-shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="flex-1">
