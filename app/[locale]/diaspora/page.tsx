@@ -14,25 +14,25 @@ export default async function DiasporaPage() {
 
   const DIASPORA_SERVICES = [
     {
-      icon: <UserCheck className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <UserCheck className="size-5 text-(--color-gb-blue)" />,
       title: "Inscription consulaire",
       description:
         "L'inscription au registre consulaire vous permet d'être officiellement recensé auprès de l'ambassade. Elle facilite la délivrance de documents officiels, l'assistance en cas de crise et le suivi de vos démarches administratives depuis la France.",
     },
     {
-      icon: <Banknote className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <Banknote className="size-5 text-(--color-gb-blue)" />,
       title: "Transferts de fonds",
       description:
         "L'ambassade vous informe sur les options sécurisées et à coût réduit pour envoyer de l'argent à vos proches en Guinée-Bissau. Des partenariats avec des opérateurs de transfert agréés permettent des envois rapides et fiables.",
     },
     {
-      icon: <FileText className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <FileText className="size-5 text-(--color-gb-blue)" />,
       title: "Actes d'état civil",
       description:
         "L'ambassade peut vous aider à obtenir des extraits de naissance, actes de mariage, casiers judiciaires et autres documents d'état civil auprès des autorités de Guinée-Bissau, en liaison directe avec les services compétents à Bissau.",
     },
     {
-      icon: <Plane className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <Plane className="size-5 text-(--color-gb-blue)" />,
       title: "Rapatriement",
       description:
         "En cas de décès d'un ressortissant en France, l'ambassade accompagne les familles dans les démarches de rapatriement du corps en Guinée-Bissau. Une assistance consulaire est disponible pour guider les proches à travers les formalités administratives et funéraires.",
@@ -75,7 +75,7 @@ export default async function DiasporaPage() {
                   className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] p-6"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-gb-green)]/10">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-(--color-gb-blue)/10">
                       {service.icon}
                     </div>
                     <h3 className="font-semibold text-[var(--color-gb-dark)]">
@@ -110,7 +110,7 @@ export default async function DiasporaPage() {
                   key={association}
                   className="flex items-center gap-2 text-[var(--color-text-body)]"
                 >
-                  <span className="size-2 shrink-0 rounded-full bg-[var(--color-gb-green)]" />
+                  <span className="size-2 shrink-0 rounded-full bg-(--color-gb-blue)" />
                   {association}
                 </li>
               ))}
@@ -137,7 +137,7 @@ export default async function DiasporaPage() {
           </div>
 
           {/* CTA */}
-          <div className="bg-[var(--color-gb-green)] text-white rounded-[var(--radius-card)] p-8">
+          <div className="bg-(--color-gb-blue) text-white rounded-[var(--radius-card)] p-8">
             <h2 className="text-xl font-semibold mb-2">
               Inscrivez-vous au registre consulaire
             </h2>
@@ -148,7 +148,7 @@ export default async function DiasporaPage() {
             </p>
             <Link
               href="/services/inscription"
-              className="inline-flex items-center justify-center h-9 px-4 bg-white text-[var(--color-gb-green)] text-sm font-semibold rounded-none hover:bg-white/90 transition-colors"
+              className="inline-flex items-center justify-center h-9 px-4 bg-white text-(--color-gb-blue) text-sm font-semibold rounded-none hover:bg-white/90 transition-colors"
             >
               S'inscrire maintenant
             </Link>
