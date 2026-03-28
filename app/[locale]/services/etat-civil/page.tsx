@@ -23,7 +23,7 @@ export default function EtatCivilPage() {
         />
         <section className="max-w-7xl mx-auto px-container py-12 space-y-8">
           {/* Alert */}
-          <div className="bg-gb-green/10 border-l-4 border-gb-green p-4 rounded-r-card">
+          <div className="bg-gb-blue/10 border-l-4 border-gb-blue p-4 rounded-r-card">
             <p className="text-text-body font-medium">
               Toute démarche d&apos;état civil requiert un rendez-vous préalable.
             </p>
