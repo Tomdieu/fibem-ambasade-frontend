@@ -13,25 +13,25 @@ export default async function CooperationPage() {
 
   const COOPERATION_DOMAINS = [
     {
-      icon: <DollarSign className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <DollarSign className="size-5 text-(--color-gb-blue)" />,
       title: "Coopération économique",
       description:
         "La France soutient le développement économique de la Guinée-Bissau à travers des programmes de renforcement des capacités institutionnelles, de modernisation du secteur privé et de diversification des exportations, notamment dans la filière cajou.",
     },
     {
-      icon: <BookOpen className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <BookOpen className="size-5 text-(--color-gb-blue)" />,
       title: "Coopération culturelle",
       description:
         "Les échanges culturels entre les deux pays se manifestent à travers des festivals, des expositions artistiques et des résidences de création. L'Institut français de Bissau joue un rôle central dans la diffusion de la langue française et la promotion des cultures locales.",
     },
     {
-      icon: <GraduationCap className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <GraduationCap className="size-5 text-(--color-gb-blue)" />,
       title: "Coopération éducative",
       description:
         "Des bourses d'études permettent chaque année à des étudiants bissau-guinéens de poursuivre leur formation en France. Des programmes de formation professionnelle et de renforcement du système éducatif national sont également financés dans le cadre de la coopération bilatérale.",
     },
     {
-      icon: <Heart className="size-5 text-[var(--color-gb-green)]" />,
+      icon: <Heart className="size-5 text-(--color-gb-blue)" />,
       title: "Aide humanitaire",
       description:
         "En cas de crises sanitaires ou naturelles, la France mobilise une aide humanitaire d'urgence pour la Guinée-Bissau. Des ONG françaises opèrent sur le terrain dans les domaines de la santé maternelle et infantile, de la nutrition et de l'accès à l'eau potable.",
@@ -83,7 +83,7 @@ export default async function CooperationPage() {
                   className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] p-6"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-gb-green)]/10">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-(--color-gb-blue)/10">
                       {domain.icon}
                     </div>
                     <h3 className="font-semibold text-[var(--color-gb-dark)]">
@@ -129,7 +129,7 @@ export default async function CooperationPage() {
                   key={project}
                   className="flex items-start gap-2 text-[var(--color-text-body)]"
                 >
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--color-gb-green)]" />
+                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-(--color-gb-blue)" />
                   {project}
                 </li>
               ))}
