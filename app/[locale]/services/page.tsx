@@ -90,7 +90,7 @@ export default async function ServicesPage() {
                   href={service.href}
                   className="bg-white border rounded-card p-6 hover:shadow-md transition block"
                 >
-                  <div className="w-10 h-10 bg-gb-green/10 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-10 h-10 bg-gb-blue/10 rounded-full flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5 text-gb-green" />
                   </div>
                   <h2 className="text-lg font-medium text-text-body mb-2">{service.title}</h2>
