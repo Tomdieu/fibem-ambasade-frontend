@@ -9,19 +9,19 @@ export const metadata: Metadata = { title: "Économie" };
 
 const SECTORS = [
   {
-    icon: <TrendingUp className="size-6 text-[var(--color-gb-green)]" />,
+    icon: <TrendingUp className="size-6 text-(--color-gb-blue)" />,
     title: "Agriculture",
     description:
       "La noix de cajou constitue la principale culture d'exportation, représentant plus de 85 % des revenus d'exportation. La Guinée-Bissau est l'un des cinq premiers producteurs mondiaux. Le riz, le sorgho, le maïs et les arachides assurent la sécurité alimentaire locale.",
   },
   {
-    icon: <Fish className="size-6 text-[var(--color-gb-green)]" />,
+    icon: <Fish className="size-6 text-(--color-gb-blue)" />,
     title: "Pêche",
     description:
       "Les eaux territoriales de Guinée-Bissau sont parmi les plus poissonneuses d'Afrique de l'Ouest. Le secteur de la pêche, artisanale et industrielle, génère des recettes significatives grâce aux licences de pêche accordées à des flottes étrangères, notamment européennes et asiatiques.",
   },
   {
-    icon: <Factory className="size-6 text-[var(--color-gb-green)]" />,
+    icon: <Factory className="size-6 text-(--color-gb-blue)" />,
     title: "Industrie légère",
     description:
       "L'industrie bissau-guinéenne reste embryonnaire mais se développe progressivement, notamment dans la transformation des noix de cajou, la production de boissons, la menuiserie et la construction. Des initiatives de zones économiques spéciales visent à attirer des investissements étrangers.",
@@ -77,7 +77,7 @@ export default function EconomiePage() {
                   className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] p-5"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-gb-green)]/10">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-[var(--color-gb-blue)]/10">
                       {sector.icon}
                     </div>
                     <h3 className="font-semibold text-[var(--color-gb-dark)]">
@@ -123,7 +123,7 @@ export default function EconomiePage() {
                   key={opportunity}
                   className="flex items-start gap-2 text-[var(--color-text-body)]"
                 >
-                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--color-gb-green)]" />
+                  <span className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--color-gb-blue)]" />
                   {opportunity}
                 </li>
               ))}
