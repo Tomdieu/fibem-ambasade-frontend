@@ -23,7 +23,7 @@ export default function InscriptionPage() {
         />
         <section className="max-w-7xl mx-auto px-container py-12 space-y-8">
           {/* Alert */}
-          <div className="bg-gb-green/10 border-l-4 border-gb-green p-4 rounded-r-card">
+          <div className="bg-gb-blue/10 border-l-4 border-gb-blue p-4 rounded-r-card">
             <p className="text-text-body font-medium">
               L&apos;inscription consulaire est fortement recommandée pour tout ressortissant bissau-guinéen résidant en France.
             </p>
