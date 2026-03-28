@@ -67,7 +67,7 @@ export default function PersonnelPage() {
                 key={member.name}
                 className="bg-white border rounded-card p-5 flex items-center gap-4"
               >
-                <div className="w-16 h-16 bg-gb-green/10 text-gb-green rounded-full flex items-center justify-center text-xl font-medium shrink-0">
+                <div className="w-16 h-16 bg-gb-blue/10 text-gb-green rounded-full flex items-center justify-center text-xl font-medium shrink-0">
                   {member.initials}
                 </div>
                 <div>
