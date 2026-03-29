@@ -57,32 +57,32 @@ export default async function DiasporaPage() {
             { label: t("pages_content.diaspora.title") },
           ]}
         />
-        <section className="max-w-7xl mx-auto px-[var(--spacing-container)] py-12 space-y-10">
+        <section className="max-w-7xl mx-auto px-(--spacing-container) py-12 space-y-10">
           {/* Intro */}
-          <p className="text-[var(--color-text-body)] leading-relaxed max-w-3xl">
+          <p className="text-(--color-text-body) leading-relaxed max-w-3xl">
             {t("pages_content.diaspora.description")}
           </p>
 
           {/* Services pour la diaspora */}
           <div>
-            <h2 className="text-xl font-semibold text-[var(--color-gb-dark)] mb-4">
+            <h2 className="text-xl font-semibold text-(--color-gb-dark) mb-4">
               {t("pages_content.diaspora.services_title")}
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {DIASPORA_SERVICES.map((service) => (
                 <div
                   key={service.title}
-                  className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] p-6"
+                  className="bg-white border border-(--color-border) rounded-card p-6"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-(--color-gb-blue)/10">
                       {service.icon}
                     </div>
-                    <h3 className="font-semibold text-[var(--color-gb-dark)]">
+                    <h3 className="font-semibold text-(--color-gb-dark)">
                       {service.title}
                     </h3>
                   </div>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
+                  <p className="text-sm text-(--color-text-muted) leading-relaxed">
                     {service.description}
                   </p>
                 </div>
@@ -92,10 +92,10 @@ export default async function DiasporaPage() {
 
           {/* Associations */}
           <div>
-            <h2 className="text-xl font-semibold text-[var(--color-gb-dark)] mb-3">
+            <h2 className="text-xl font-semibold text-(--color-gb-dark) mb-3">
               {t("pages_content.diaspora.associations_title")}
             </h2>
-            <p className="text-[var(--color-text-body)] leading-relaxed mb-4">
+            <p className="text-(--color-text-body) leading-relaxed mb-4">
               De nombreuses associations contribuent à la vitalité de la
               communauté bissau-guinéenne en France. Elles organisent des
               événements culturels, soutiennent les nouveaux arrivants dans
@@ -108,7 +108,7 @@ export default async function DiasporaPage() {
               {ASSOCIATIONS.map((association) => (
                 <li
                   key={association}
-                  className="flex items-center gap-2 text-[var(--color-text-body)]"
+                  className="flex items-center gap-2 text-(--color-text-body)"
                 >
                   <span className="size-2 shrink-0 rounded-full bg-(--color-gb-blue)" />
                   {association}
@@ -119,10 +119,10 @@ export default async function DiasporaPage() {
 
           {/* Informations pratiques */}
           <div>
-            <h2 className="text-xl font-semibold text-[var(--color-gb-dark)] mb-3">
+            <h2 className="text-xl font-semibold text-(--color-gb-dark) mb-3">
               Informations pratiques
             </h2>
-            <p className="text-[var(--color-text-body)] leading-relaxed">
+            <p className="text-(--color-text-body) leading-relaxed">
               Pour toute démarche consulaire, il est recommandé de prendre
               rendez-vous en ligne via la plateforme de l'ambassade afin
               d'éviter les délais d'attente. Munissez-vous de vos
@@ -137,7 +137,7 @@ export default async function DiasporaPage() {
           </div>
 
           {/* CTA */}
-          <div className="bg-(--color-gb-blue) text-white rounded-[var(--radius-card)] p-8">
+          <div className="bg-(--color-gb-blue) text-white rounded-card p-8">
             <h2 className="text-xl font-semibold mb-2">
               Inscrivez-vous au registre consulaire
             </h2>
