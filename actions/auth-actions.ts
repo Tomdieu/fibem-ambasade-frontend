@@ -8,67 +8,123 @@ type LoginCredentials = {
   password: string;
 };
 
-type MockUser = {
+type RegisterCredentials = {
   email: string;
   password: string;
-  role: "admin" | "agent" | "citizen";
-  redirectPath: string;
+  first_name?: string;
+  last_name?: string;
 };
-
-const MOCK_USERS: MockUser[] = [
-  {
-    email: "admin@ambassade.gw",
-    password: "admin",
-    role: "admin",
-    redirectPath: "/admin",
-  },
-  {
-    email: "agent@ambassade.gw",
-    password: "agent",
-    role: "agent",
-    redirectPath: "/dashboard",
-  },
-  {
-    email: "citoyen@test.fr",
-    password: "citoyen",
-    role: "citizen",
-    redirectPath: "/dashboard",
-  },
-];
 
 export async function loginAction(
   formData: LoginCredentials
 ): Promise<{ error: string } | never> {
   const { email, password } = formData;
 
-  const user = MOCK_USERS.find(
-    (u) => u.email === email && u.password === password
-  );
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/auth/login/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-  if (!user) {
-    return { error: "Identifiants incorrects." };
+    if (!response.ok) {
+      const data = await response.json();
+      return { error: data.error || "Identifiants incorrects." };
+    }
+
+    const data = await response.json();
+    const cookieStore = await cookies();
+
+    // Store auth token
+    cookieStore.set("gb-session", data.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 86400 * 30, // 30 days
+      path: "/",
+    });
+
+    // Store user info
+    cookieStore.set("gb-user", JSON.stringify(data.user), {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      path: "/",
+    });
+
+    // Store role
+    cookieStore.set("gb-role", data.profile?.role || "citizen", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      path: "/",
+    });
+
+    // Determine redirect path based on role
+    const roleRedirectMap: { [key: string]: string } = {
+      admin: "/admin",
+      agent: "/dashboard",
+      citizen: "/dashboard",
+    };
+
+    const redirectPath = roleRedirectMap[data.profile?.role] || "/dashboard";
+    redirect(redirectPath);
+  } catch (error) {
+    console.error("Login error:", error);
+    return { error: "Une erreur est survenue. Veuillez réessayer." };
   }
+}
 
-  const cookieStore = await cookies();
+export async function registerAction(
+  formData: RegisterCredentials
+): Promise<{ error: string } | { success: true }> {
+  const { email, password, first_name, last_name } = formData;
 
-  cookieStore.set("gb-session", user.email, {
-    httpOnly: true,
-    secure: true,
-    maxAge: 86400,
-    path: "/",
-  });
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/auth/register/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        first_name: first_name || '',
+        last_name: last_name || '',
+      }),
+    });
 
-  cookieStore.set("gb-role", user.role, {
-    httpOnly: true,
-    path: "/",
-  });
+    if (!response.ok) {
+      const data = await response.json();
+      return { error: data.error || "Erreur lors de l'inscription." };
+    }
 
-  redirect(user.redirectPath);
+    return { success: true };
+  } catch (error) {
+    console.error("Register error:", error);
+    return { error: "Une erreur est survenue. Veuillez réessayer." };
+  }
 }
 
 export async function logoutAction(): Promise<never> {
   const cookieStore = await cookies();
+  
+  try {
+    const token = cookieStore.get("gb-session")?.value;
+    if (token) {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/auth/logout/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+
   cookieStore.delete("gb-session");
+  cookieStore.delete("gb-user");
   cookieStore.delete("gb-role");
   redirect("/");
 }
