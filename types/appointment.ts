@@ -12,6 +12,22 @@ export interface DaySlots {
   slots: TimeSlot[];
 }
 
+export interface Appointment {
+  id: number;
+  confirmation_number: string;
+  service_type: ServiceType;
+  appointment_date: string;
+  appointment_time: string;
+  status: "scheduled" | "completed" | "cancelled" | "no_show";
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface BookingFormData {
   serviceType: ServiceType;
   date: string;
