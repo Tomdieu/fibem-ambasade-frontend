@@ -442,6 +442,15 @@ export default {
     role_admin: "Administratrice",
     logout: "Se déconnecter",
   },
+  agent: {
+    backoffice_title: "Espace Agent",
+    gestion: "Gestion",
+    demandes_a_traiter: "Demandes à traiter",
+    rendez_vous: "Rendez-vous",
+    mon_profil: "Mon profil",
+    role_agent: "Agent consulaire",
+    logout: "Se déconnecter",
+  },
   // CITIZEN DASHBOARD
   citizen: {
     dashboard_title: "Espace citoyen",
