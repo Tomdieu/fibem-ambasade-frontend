@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect, useMemo } from "react";
 import {
   LayoutDashboard,
   FileText,
   Calendar,
-  FolderOpen,
   User,
   LogOut,
 } from "lucide-react";
@@ -26,19 +26,47 @@ import { logoutAction } from "@/actions/auth-actions";
 import { cn } from "@/lib/utils";
 
 import { useI18n } from "@/locales/client";
-import { useMemo } from "react";
+
+interface UserData {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
 
 export function CitizenSidebar() {
   const pathname = usePathname();
   const t = useI18n();
+  const [user, setUser] = useState<UserData | null>(null);
+
+  // Load user from cookie on mount
+  useEffect(() => {
+    const userCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("gb-user="));
+    
+    if (userCookie) {
+      try {
+        const userJson = decodeURIComponent(userCookie.split("=")[1]);
+        const userData = JSON.parse(userJson);
+        setUser(userData);
+      } catch (error) {
+        console.error("Error parsing user cookie:", error);
+      }
+    }
+  }, []);
 
   const navItems = useMemo(() => [
     { label: t("citizen.nav_dashboard"), href: "/dashboard", icon: LayoutDashboard },
     { label: t("citizen.nav_requests"), href: "/dashboard/demandes", icon: FileText },
     { label: t("citizen.nav_appointments"), href: "/dashboard/rendez-vous", icon: Calendar },
-    { label: t("citizen.nav_documents"), href: "/dashboard/documents", icon: FolderOpen },
     { label: t("citizen.nav_profile"), href: "/dashboard/profil", icon: User },
   ], [t]);
+
+  const fullName = user ? `${user.first_name} ${user.last_name}` : "Utilisateur";
+  const initials = user
+    ? `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase()
+    : "U";
 
   return (
     <Sidebar>
@@ -46,11 +74,11 @@ export function CitizenSidebar() {
         <div className="flex items-center gap-3 px-2 py-1">
           <Avatar className="size-9 shrink-0">
             <AvatarFallback className="bg-[var(--color-gb-red)]/10 text-[var(--color-gb-red)] text-sm font-semibold">
-              JM
+              {initials}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-sm font-medium truncate">João Mendes</span>
+            <span className="text-sm font-medium truncate">{fullName}</span>
             <Badge variant="secondary" className="w-fit text-xs px-1.5 py-0">
               {t("citizen.role_citizen")}
             </Badge>
