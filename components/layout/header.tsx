@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { Globe, Menu } from "lucide-react";
+import { Globe, Menu, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -24,6 +24,13 @@ import { cn } from "@/lib/utils";
 import { MobileNav } from "./mobile-nav";
 import { SearchDialog } from "./search-dialog";
 import Image from "next/image";
+
+interface UserData {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
 
 const LOCALE_MAP = { FR: "fr", EN: "en", PT: "pt" } as const;
 type Language = keyof typeof LOCALE_MAP;
@@ -79,8 +86,28 @@ export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [user, setUser] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { mainNav } = useNavigation();
   const t = useI18n();
+
+  // Load user from cookie on mount
+  useEffect(() => {
+    const userCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("gb-user="));
+    
+    if (userCookie) {
+      try {
+        const userJson = decodeURIComponent(userCookie.split("=")[1]);
+        const userData = JSON.parse(userJson);
+        setUser(userData);
+      } catch (error) {
+        console.error("Error parsing user cookie:", error);
+      }
+    }
+    setIsLoading(false);
+  }, []);
 
   // Detect current locale from the URL
   const currentLocale =
@@ -102,6 +129,15 @@ export function Header() {
     const pathWithoutLocale = pathname.replace(/^\/(fr|en|pt)/, "") || "/";
     document.cookie = `NEXT_LOCALE=${nextLocale};path=/;max-age=31536000`;
     router.push(`/${nextLocale}${pathWithoutLocale}`);
+  };
+
+  const handleLogout = async () => {
+    // Clear user cookie and redirect
+    document.cookie = "gb-session=; path=/; max-age=0;";
+    document.cookie = "gb-user=; path=/; max-age=0;";
+    document.cookie = "gb-role=; path=/; max-age=0;";
+    setUser(null);
+    router.push(`/${currentLocale}`);
   };
 
   return (
@@ -134,14 +170,57 @@ export function Header() {
             <div className="flex items-center gap-1">
               <SearchDialog />
 
-              {/* Auth links — desktop only */}
-              <div className="hidden md:flex gap-1">
-                <Button variant="ghost" size="sm" className="text-xs">
-                  <Link href="/auth/login">{t("auth.login_btn")}</Link>
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Link href="/auth/register">{t("auth.register_link")}</Link>
-                </Button>
+              {/* Auth section — desktop only */}
+              <div className="hidden md:flex gap-1 items-center">
+                {!isLoading && user ? (
+                  <>
+                    {/* User info */}
+                    <div className="flex items-center gap-2 px-3 py-1">
+                      <User className="size-4 text-[var(--color-gb-red)]" />
+                      <div className="text-xs">
+                        <p className="font-medium text-(--color-gb-dark)">
+                          {user.first_name}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Dashboard button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-xs text-(--color-gb-red) border-(--color-gb-red) hover:bg-gb-red/10"
+                      asChild
+                    >
+                      <Link href={`/${currentLocale}/dashboard`}>
+                        {t("citizen.nav_dashboard")}
+                      </Link>
+                    </Button>
+
+                    {/* Logout button */}
+                    <Button
+                      onClick={handleLogout}
+                      variant="ghost"
+                      size="sm"
+                      className="text-xs text-(--color-gb-red) hover:bg-gb-red/10"
+                    >
+                      <LogOut className="size-3.5 mr-1" />
+                      {t("citizen.logout")}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {/* Login & Register buttons */}
+                    <Button variant="ghost" size="sm" className="text-xs">
+                      <Link href={`/${currentLocale}/auth/login`}>{t("auth.login_btn")}</Link>
+                    </Button>
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Link href={`/${currentLocale}/auth/register`}>{t("auth.register_link")}</Link>
+                    </Button>
+                  </>
+                )}
               </div>
 
               {/* Language toggle */}
@@ -188,6 +267,10 @@ export function Header() {
         navItems={mainNav}
         isOpen={mobileNavOpen}
         onClose={() => setMobileNavOpen(false)}
+        user={user}
+        isLoading={isLoading}
+        onLogout={handleLogout}
+        locale={currentLocale}
       />
     </>
   );
