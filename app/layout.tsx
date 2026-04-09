@@ -127,8 +127,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning className={cn("h-full", montserrat.variable)}>
-      <body className="min-h-full flex flex-col antialiased">
+    <html suppressHydrationWarning suppressContentEditableWarning className={cn("h-full", montserrat.variable)}>
+      <body suppressHydrationWarning className="min-h-full flex flex-col antialiased">
         {children}
         <script
           type="application/ld+json"
