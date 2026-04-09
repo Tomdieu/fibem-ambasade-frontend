@@ -15,6 +15,12 @@ type RegisterCredentials = {
   last_name?: string;
 };
 
+// Get current locale from cookie, default to 'fr'
+function getLocale(): string {
+  const cookieStore = cookies();
+  return cookieStore.get("Next-Locale")?.value || "fr";
+}
+
 export async function loginAction(
   formData: LoginCredentials
 ): Promise<{ error: string } | never> {
@@ -59,14 +65,15 @@ export async function loginAction(
       path: "/",
     });
 
-    // Determine redirect path based on role
+    // Determine redirect path based on role with locale prefix
+    const locale = getLocale();
     const roleRedirectMap: { [key: string]: string } = {
-      admin: "/admin",
-      agent: "/dashboard",
-      citizen: "/dashboard",
+      admin: `/${locale}/admin`,
+      agent: `/${locale}/agent/dashboard`,
+      citizen: `/${locale}/dashboard`,
     };
 
-    const redirectPath = roleRedirectMap[data.profile?.role] || "/dashboard";
+    const redirectPath = roleRedirectMap[data.profile?.role] || `/${locale}/dashboard`;
     redirect(redirectPath);
   } catch (error) {
     console.error("Login error:", error);
@@ -126,5 +133,8 @@ export async function logoutAction(): Promise<never> {
   cookieStore.delete("gb-session");
   cookieStore.delete("gb-user");
   cookieStore.delete("gb-role");
-  redirect("/");
+  
+  // Redirect to home with locale
+  const locale = getLocale();
+  redirect(`/${locale}`);
 }
