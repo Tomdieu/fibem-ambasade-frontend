@@ -47,22 +47,31 @@ export function proxy(request: NextRequest) {
   // Auth protection
   const pathWithoutLocale = pathname.slice(pathnameLocale.length + 1) || "/";
   const session = request.cookies.get("gb-session");
+  const role = request.cookies.get("gb-role")?.value;
 
   const isProtectedDashboard = pathWithoutLocale.startsWith("/dashboard");
   const isProtectedAdmin = pathWithoutLocale.startsWith("/admin");
-  const isAuthPage = pathWithoutLocale.startsWith("/auth/login");
+  const isAuthPage = pathWithoutLocale.startsWith("/auth");
 
-  if ((isProtectedDashboard || isProtectedAdmin) && !session) {
+  // Protect dashboard routes - require citizen role and session
+  if (isProtectedDashboard && !session) {
     const loginUrl = new URL(`/${pathnameLocale}/auth/login`, request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
+  // Protect admin routes - require admin role and session
+  if (isProtectedAdmin && (!session || role !== "admin")) {
+    const loginUrl = new URL(`/${pathnameLocale}/auth/login`, request.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Redirect to dashboard if already logged in and trying to access auth pages
   if (isAuthPage && session) {
-    const role = request.cookies.get("gb-role")?.value;
-    const dest = role === "admin" ? "admin" : "dashboard";
+    const redirectPath = role === "admin" ? "admin" : "dashboard";
     return NextResponse.redirect(
-      new URL(`/${pathnameLocale}/${dest}`, request.url)
+      new URL(`/${pathnameLocale}/${redirectPath}`, request.url)
     );
   }
 
