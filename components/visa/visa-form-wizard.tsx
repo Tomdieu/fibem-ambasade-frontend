@@ -105,9 +105,11 @@ export function VisaFormWizard() {
         setReference(result.reference);
         setSubmitted(true);
       } else {
+        console.error("Submission failed:", result);
         setSubmitError(result.error ?? t("visa_form_wizard.error_generic"));
       }
-    } catch {
+    } catch (error) {
+      console.error("Submission exception:", error);
       setSubmitError(t("visa_form_wizard.error_network"));
     } finally {
       setIsSubmitting(false);
